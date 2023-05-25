@@ -1,0 +1,5 @@
+export { NavBar } from './components/NavBar'
+export { Register } from './components/Register'
+export { LoginComp } from './components/LoginComp'
+export { HomePage } from './pages/HomePage'
+export { LoginPage } from './pages/LoginPage'

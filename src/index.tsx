@@ -8,6 +8,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
+  //TODO: Aqui tiene que ir el provider para trabajar con Redux
   <React.StrictMode>
     <App />
   </React.StrictMode>
