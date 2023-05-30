@@ -1,5 +1,5 @@
 import React from "react";
-import { useFields } from "../../hooks/useFields";
+import { useForm } from "../../hooks/useForm";
 
 export const LoginComp = () => {
   //   Defino la interfaz para asegurar el tipado de los datos que estoy utilizando
@@ -10,18 +10,25 @@ export const LoginComp = () => {
   // Creo el objeto que voy a estar utilizando para contener los valores editados de cada campo
   const initFormState: initFS = {
     loginEmail: "",
-    loginPassword: "",
+    loginPassword: ""
+  };
+
+  const formValidations = {
+    loginEmail: [ (value : string ) =>  value.includes('@'),'Falta arroba'],
+    loginPassword: [ (value : string ) =>  value.length >= 6 ,''],
   };
   //Hook que contiene el estado de los campos del formulario
-  const { formState, onInputChange:onLoginInputChange, validateEmpty  } = useFields(initFormState);
-
-
+  const {
+    values,
+    errors,
+    handleChange: onLoginInputChange
+  } = useForm(initFormState, formValidations);
 
   const loginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    validateEmpty(event);
   };
 
+ console.log(errors);
 
   return (
     <div className="container-right">
@@ -33,18 +40,19 @@ export const LoginComp = () => {
           <div className="fieldform">
             <input
               onChange={onLoginInputChange}
-              value={formState.loginEmail}
+              value={values.loginEmail}
               className="form-control"
               name="loginEmail"
               placeholder="Email"
               type="text"
               required
             />
+              
           </div>
           <div className="fieldform">
             <input
               onChange={onLoginInputChange}
-              value={formState.loginPassword}
+              value={values.loginPassword}
               className="form-control"
               name="loginPassword"
               placeholder="Password"

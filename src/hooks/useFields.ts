@@ -1,6 +1,6 @@
-import { ReactHTML, useEffect, useMemo, useState } from "react";
+import {  useEffect, useMemo, useState } from "react";
 
-export const useFields = <T>(initialForm: T) => {
+export const useFields =<T>(initialForm: T) => {
   //Hook que maneja el estado del formulario
   const [formState, setFormState] = useState<T>(initialForm);
   //Hook que contiene el estado de la validacion el formulario
@@ -10,9 +10,11 @@ export const useFields = <T>(initialForm: T) => {
   useEffect(() => {
   }, [formState]);
 
+
+
   //Hook que contiene el estado de la validacion el formulario
   const onInputChange = ({ target }: { target: any }) => {
-    console.log(target);
+    // console.log(target);
     const { name, value } = target;
     setFormState({
       ...formState,
@@ -31,7 +33,7 @@ export const useFields = <T>(initialForm: T) => {
             formCheckedValues[`${inputForm.name}Valid`] = !!inputForm.value ? true : "No empty values allowed.";
         }
     }
-    console.log(formCheckedValues);
+    // console.log(formCheckedValues);
     setFormValidation(formCheckedValues);
 }
 
@@ -42,13 +44,23 @@ const isFormValid = useMemo(() => {
 }, [])
 
 
+
+//Para hacer un reset en el formulario
+
+//Funcion que hace el reset del formulario
+const onResetForm = () => {
+  setFormState(initialForm);
+}
+
+
   return {
     formState,
     onInputChange,
 
     ...formValidation,
     validateEmpty,
-    isFormValid
+    isFormValid,
+    onResetForm
   };
 };
 
