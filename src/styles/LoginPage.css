@@ -89,6 +89,13 @@ y los modificadores a los cambios de ese bloque
     border-bottom: #F25E5E solid .2px;
     
 }
+.errormsg{
+    font-weight: bold;
+    color: red;
+    font-size: 10px;
+    padding: 5px;
+    text-align: center;
+  }
 
 
 @media screen and (max-width: 712px){
