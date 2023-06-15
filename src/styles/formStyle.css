@@ -195,3 +195,127 @@
 
 /* -------------------------- */
 
+:root {
+  --colorMC-Pink: #f25e5e;
+  --colorMC-BlueDark: #426a8c;
+  --colorMC-BlueLigth: #45718c;
+}
+
+/*
+El standar que voy a usar para el CSS se llama BEM: https://css-tricks.com/bem-101/
+tengo el componenete del bloque: 
+    .btn{}
+El elemento que depende del elemento del bloque
+    .btn__price{}
+y los modificadores a los cambios de ese bloque
+    .btn--orange{}
+    .btn--big{}
+*/
+
+.container-X2-Col {
+  display: flex;
+  margin-top: 25%;
+}
+.total--height {
+  height: 100%;
+}
+
+.container-center {
+  /* margin: 0 auto; */
+  /* max-width: 600px; */
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+.container-right {
+  align-items: end;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 5px;
+  /* justify-content: center; */
+  /* margin: 0 auto; */
+  /* max-width: 600px; */
+  width: 50%;
+}
+.container-left {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  justify-content: right;
+  height: 100%;
+  /* margin: 0 auto; */
+  /* max-width: 600px; */
+  width: 50%;
+}
+
+.container__Login--tittle {
+  display: flex;
+  justify-content: center;
+  color: #426a8c;
+  border-bottom: #f25e5e 2px solid;
+  margin: 0px 0px 10px 0px;
+}
+.center-tittle {
+  max-width: 100%;
+}
+
+.fieldform {
+  margin: 2px 0px 2px 0px;
+  padding: 2px 0px 2px 0px;
+}
+
+
+
+.button {
+  background-color: #45718c;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+}
+.button:hover {
+  background-color: #426a8c;
+  color: black;
+}
+
+.fieldform input {
+  border: 0 solid;
+  border-bottom: #f25e5e solid 0.2px;
+}
+.fieldform--center input {
+  border: 0 solid;
+  border-bottom: #f25e5e solid 0.2px;
+  text-align: center;
+}
+.errormsg {
+  font-weight: bold;
+  color: red;
+  font-size: 10px;
+  padding: 5px;
+  text-align: center;
+}
+
+@media screen and (max-width: 712px) {
+  .container-X2-Col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .total--height {
+    height: 50%;
+  }
+  .container-right {
+    justify-content: center;
+    align-items: center;
+  }
+  .container-left {
+    justify-content: center;
+    align-items: center;
+  }
+}

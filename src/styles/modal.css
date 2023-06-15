@@ -1,0 +1,63 @@
+:root {
+  --colorMC-Pink: #f25e5e;
+  --colorMC-BlueDark: #426a8c;
+  --colorMC-BlueLigth: #45718c;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  left: 0;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+}
+.modal.modal--open {
+  display: flex;
+}
+.modal__container {
+  position: relative;
+  min-width: 320px;
+  max-width: 420px;
+  min-height: 200px;
+  max-height: 230px;
+  background-color: #fff;
+  overflow: hidden;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+.modal__button {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  text-decoration: underline;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+}
+.modal__button:hover {
+  color: var(--colorMC-Pink);
+}
+
+.modal__center{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos segun el contenido del model */
+
+@media screen and (max-width: 712px) {
+  .modal__container {
+    min-width: 320px;
+    max-width: 380px;
+  }
+}

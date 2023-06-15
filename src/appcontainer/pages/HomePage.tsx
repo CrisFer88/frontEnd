@@ -1,10 +1,10 @@
 import React from 'react'
-import { NavBar } from '../index'
+import { NavRouter } from '../routes/NavRouter'
 
 export const HomePage = ():JSX.Element => {
   return (
     <>
-        <NavBar/>
+        <NavRouter/>
     </>
   )
 }

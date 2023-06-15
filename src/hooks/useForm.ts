@@ -27,7 +27,7 @@ export const useForm = <T>(initialValues: T, formValidations: object = {}) => {
   const handleOnBlur = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target;
     const [fn, errorMessage, require] = (formValidations as any)[name];
-    console.log(name);
+    // console.log(name);
     if (require === "require" && !value) {
       setErrors(() => ({
         ...errors,

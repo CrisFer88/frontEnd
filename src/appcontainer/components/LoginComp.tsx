@@ -1,12 +1,15 @@
 import React from "react";
 import { useForm } from "../../hooks/useForm";
 import { regexBasicPassword, regexEmail } from "../../utils/regexVar";
+import { useAuthStore } from "../../hooks";
+
 
 export const LoginComp = () => {
+  const {  startLoging } = useAuthStore();
   /*________________________________________________________________________
   
-                               PREPARACION DE VARIABLES PARA VALIDACION 
-                                   DEL FORMULARIO Y MANEJO DE DATA
+  PREPARACION DE VARIABLES PARA VALIDACION 
+  DEL FORMULARIO Y MANEJO DE DATA
   __________________________________________________________________________*/
   //   Defino la interfaz para asegurar el tipado de los datos que estoy utilizando
   interface initFS {
@@ -52,23 +55,19 @@ export const LoginComp = () => {
     isFormValid,
     onResetForm,
   } = useForm(initFormState, formValidations);
- //En el evento de envio del formulario
+
+  //En el evento de envio del formulario
+
   const loginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     //Verifico si el formulario tiene algun error, es decir, si el formulario es valido - true -
     if (isFormValid) {
-      const { loginEmail, loginPassword } = values;
+      const { loginEmail: user_email, loginPassword: user_password } = values;
       //Preparlo la data que va a ser enviada al auth
-      const data = {
-        loginEmail,
-        loginPassword,
-      };
-      console.log(data);
+      startLoging({ user_email, user_password });
     }
     onResetForm();
   };
-
-  // console.log(errors);
 
   return (
     <div className="container-right">

@@ -1,42 +1,47 @@
-import React, { Fragment } from 'react'
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { LoginPage, HomePage }from '../appcontainer';
+import { LoginPage, HomePage } from "../appcontainer";
+import { useAuthStore } from "../hooks";
 
-
-//TODO: En esta parte puedo realizar  la verificacion del usuario en ell authStore cuando lo cree
-const statusAuth: string = 'non-authenticated';
 // const statusAuth: string = 'authenticated';
 
-const AppRouter = () :JSX.Element  => {
-    //TODO:En el AppRouter voy a definir mi entrada a la aplicacion, aqui valido que la sesion sea validada
-    return (
-        <Routes >
-    
-            {
-            //  TODO: hacer la autentificacion de la ruta, mostrar el registro si el usuario no esta registrado
-              ( statusAuth === 'non-authenticated') //Si estoy autenticado
-                ? (
-                
-                  <>
-                    {/* LLevame al login para el ingreso */}
-                    <Route path="/auth/*" element={ <LoginPage /> } /> 
-                    {/* Esta parte es un fail save, lo que hace es que si no estoy autenticado, me lleva a registrarme */}
-                    <Route path="/*" element={ <Navigate to ="/auth/login" /> } /> 
-                  </> 
-                )
-                : (
-                  <>
-                    {/* Si estoy autenticado llevame a cualquier parte de mi aplicacion */}
-                    <Route path="*" element={ <HomePage /> } /> 
-                    <Route path="/*" element={ <Navigate to ="/" /> }  />
-                  </>
-                )
-              }
-          
-    
-            
-        </Routes >
-      )
-}
+const AppRouter = (): JSX.Element => {
+  //TODO:En el AppRouter voy a definir mi entrada a la aplicacion, aqui valido que la sesion sea validada
+  const lastPath = localStorage.getItem("lastPath");
+  // Con esta variable se en que Pad estuvo la pagina antes de ser actualizada
+  const userSt = localStorage.getItem("userSt");
+  const { statusAuth, checkAuthToken } = useAuthStore();
+  //TODO: En esta parte puedo realizar  la verificacion del usuario en ell authStore cuando lo cree
 
-export default AppRouter    
+  // console.log('este es el statusAuth', statusAuth);
+
+  useEffect(() => {
+    checkAuthToken();
+  }, []);
+
+  if (statusAuth === "checking") {
+    return <h3>Cargando...</h3>;
+  }
+  return (
+    <Routes>
+      {
+        //  TODO: hacer la autentificacion de la ruta, mostrar el registro si el usuario no esta registrado
+        statusAuth === "not-authenticated" && userSt !== 'OK' ? ( //Si estoy autenticado
+          <>
+            {/* LLevame al login para el ingreso */}
+            <Route path="/auth/*" element={<LoginPage />} />
+            <Route path="/*" element={<Navigate to="/auth/loging" />} />
+          </>
+        ) : (
+          <>
+            {/* Si estoy autenticado llevame a cualquier parte de mi aplicacion */}
+            <Route path="/*" element={<HomePage />} />
+            <Route path="/*" element={<Navigate to={ lastPath || '/' }/>} />
+          </>
+        )
+      }
+    </Routes>
+  );
+};
+
+export default AppRouter;

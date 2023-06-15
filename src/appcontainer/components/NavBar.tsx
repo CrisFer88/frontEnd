@@ -3,11 +3,29 @@ import '../../styles/navbar.css';
 import LogoCompanny from '../../assets/img/Logo.png';
 import Rigth_Arrow from '../../assets/img/Rigth_Arrow.svg';
 import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { useAuthStore } from '../../hooks';
 
 
 export const NavBar = () => {
 
 
+    const [hamButton, setHamButton] = useState(false);
+    const { startLogout, user } = useAuthStore();
+
+    // console.log(user);
+
+    const handleHamburger = ( event: React.MouseEvent<HTMLButtonElement>) => {
+        //TODO: cuando se hace clic en el boton de hamburguesa se tiene que desplegar el menu
+        event.preventDefault();
+        // console.log((event.currentTarget as HTMLButtonElement)?.className);
+        if (event.currentTarget?.id === 'HamButton') {
+            event.currentTarget.className = hamButton
+              ? 'hamburger__button'
+              : 'hamburger__button is_active';
+            setHamButton(!hamButton);
+          }
+    }
 
     return (
         <>
@@ -29,7 +47,7 @@ export const NavBar = () => {
                     </section>
                     <section className="menu__thema--name">
                         <h1>
-                            'Aqui va el nombre'
+                        { (user as { name: string }).name }
                         </h1>
                     </section>
                     {/* <section className="menu__thema">
@@ -47,49 +65,15 @@ export const NavBar = () => {
                 <section className="menu__container">
 
                     <ul className="menu__principal">
-{/* ---------------------------MACHINERY----------------------------------- */}
-                        <li className="menu__item">
-                            <a className="menu__link">Machinery <img src={Rigth_Arrow} className="menu__arrow" /></a>
-                            <ul className="menu__nesting">
-
-                                <li className="menu__inside">
-                                    <NavLink
-                                        className='menu__link'
-                                        to='blades'
-                                    >
-                                        Blades
-                                    </NavLink>
-
-                                </li>
-
-                                <li className="menu__inside">
-                                    <NavLink
-                                        className='menu__link'
-                                        to='machinery'
-                                    >
-                                        Machinery manage
-                                    </NavLink>
-                                </li>
-                                <li className="menu__inside">
-                                    <NavLink
-                                        className='menu__link'
-                                        to=''
-                                    >
-                                        Other 2
-                                    </NavLink>
-                                </li>
-                            </ul>
-                        </li>
-{/* ------------------------------------------------------------------------ */}
 {/* ---------------------------PRODUCTION----------------------------------- */}
-                        <li className="menu__item">
-                        <a className="menu__link">Production<img src={Rigth_Arrow} className="menu__arrow" /></a>
+<li className="menu__item">
+                        <button className="menu__link">Production<img src={Rigth_Arrow} className="menu__arrow" alt='button'/></button>
                             <ul className="menu__nesting">
 
                                 <li className="menu__inside">
                                     <NavLink
                                         className='menu__link'
-                                        to='manufacturing'
+                                        to='production/manufacturing'
                                     >
                                         Manufacturing
                                     </NavLink>
@@ -115,17 +99,52 @@ export const NavBar = () => {
                             </ul>
                         </li>
 {/* ------------------------------------------------------------------------ */}
+{/* ---------------------------MACHINERY----------------------------------- */}
+                        <li className="menu__item">
+                            <button className="menu__link">Machinery <img src={Rigth_Arrow} className="menu__arrow" alt='button'/></button>
+                            <ul className="menu__nesting">
+
+                                <li className="menu__inside">
+                                    <NavLink
+                                        className='menu__link'
+                                        to='machinery/blades'
+                                    >
+                                        Blades
+                                    </NavLink>
+
+                                </li>
+
+                                <li className="menu__inside">
+                                    <NavLink
+                                        className='menu__link'
+                                        to='machinery'
+                                    >
+                                        Machinery manage
+                                    </NavLink>
+                                </li>
+                                <li className="menu__inside">
+                                    <NavLink
+                                        className='menu__link'
+                                        to=''
+                                    >
+                                        Other 2
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </li>
+{/* ------------------------------------------------------------------------ */}
+
                         <li className="menu__item">
                             <NavLink
                                 className='menu__link'
                                 to='inventory'
                             >
-                                Inventory
+                                <button className="menu__link">Inventory <img src={Rigth_Arrow} className="menu__arrow" alt='button'/></button>
                             </NavLink>
                         </li>
 
                         <li className="menu__item">
-                            <a className="menu__link">Integration <img src={Rigth_Arrow} className="menu__arrow" /></a>
+                            <button className="menu__link">Integration <img src={Rigth_Arrow} className="menu__arrow" alt='button'/></button>
                             <ul className="menu__nesting">
 
                                 <li className="menu__inside">
@@ -161,22 +180,22 @@ export const NavBar = () => {
                 <section className="menu__logout">
                     <button
                         className='buttonLogout'
-                        // onClick={startLogout}
+                        onClick={startLogout}
                     >
                         Logout
                     </button>
                 </section>
-                {/* <section className="hamburger"> */}
+                <section className="hamburger">
                     <button 
                     className='hamburger__button' 
                     id='HamButton'
-                    // onClick={handleHamburger}
+                    onClick={handleHamburger}
                     >
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
-                {/* </section> */}
+                </section>
                 </div>                       
             </nav>
         </>

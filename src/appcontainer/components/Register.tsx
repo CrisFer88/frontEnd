@@ -7,7 +7,6 @@ import {
   regexEmail,
   regexText,
 } from "../../utils/regexVar";
-import moment from "moment";
 
 export const Register = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -90,7 +89,7 @@ export const Register = () => {
   } = useForm(initFormState, formValidations);
 
   //En el evento de envio del formulario
-  const loginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const registerSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
 
@@ -124,8 +123,8 @@ export const Register = () => {
         <div className="container__Login--tittle">
           <h3>SING UP</h3>
         </div>
-        <form onSubmit={loginSubmit}>
-          <div className="fieldform">
+        <form onSubmit={registerSubmit}>
+          <div className="fieldform--center">
             <DatePicker
               selected={startDate}
               onChange={(date: Date) => setStartDate(date)}
