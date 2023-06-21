@@ -7,10 +7,6 @@ interface initStateIf {
   errorMsg: object;
 }
 
-
-
-
-
 const initialState: initStateIf = {
   statusAuth: "not-authenticated",
   user: {},

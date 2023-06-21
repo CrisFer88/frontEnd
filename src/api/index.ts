@@ -5,3 +5,4 @@ conectarse a la base de datos y establecer una conexion ( base url, headers)
 */
 
 export { default as loginApi } from "./loginApi";
+export { default as transactionApi } from "./transactionApi";

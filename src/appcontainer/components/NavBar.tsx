@@ -144,15 +144,15 @@ export const NavBar = () => {
                         </li>
 
                         <li className="menu__item">
-                            <button className="menu__link">Integration <img src={Rigth_Arrow} className="menu__arrow" alt='button'/></button>
+                            <button className="menu__link">Settings <img src={Rigth_Arrow} className="menu__arrow" alt='button'/></button>
                             <ul className="menu__nesting">
 
                                 <li className="menu__inside">
                                     <NavLink
                                         className='menu__link'
-                                        to='monday'
+                                        to='setBasic'
                                     >
-                                        Monday
+                                        Basics goods
                                     </NavLink>
                                 </li>
                                 <li className="menu__inside">
@@ -160,7 +160,7 @@ export const NavBar = () => {
                                         className='menu__link'
                                         to=''
                                     >
-                                        Other 1
+                                        Users
                                     </NavLink>
                                 </li>
                                 <li className="menu__inside">
