@@ -16,13 +16,24 @@ export const useForm = <T>(initialValues: T, formValidations: object = {}) => {
     return true;
 }, [errors])
 
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target;
     setValues(() => ({
       ...values,
       [name]: value,
     }));
   };
+
+  const handleChangeSelect = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
+    // console.log(target);
+    const { name, value } = target;
+    setValues(() => ({
+      ...values,
+      [name]: value,
+    }));
+  };
+
+
 
   const handleOnBlur = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target;
@@ -68,7 +79,8 @@ export const useForm = <T>(initialValues: T, formValidations: object = {}) => {
   return {
     values,
     errors,
-    handleChange,
+    handleChangeInput,
+    handleChangeSelect,
     handleOnBlur,
     isFormValid,
     onResetForm

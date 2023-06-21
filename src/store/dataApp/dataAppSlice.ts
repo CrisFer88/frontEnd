@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface initData {
   statusQuery: boolean;
-  data: Object;
+  data: [];
+  dataFetched: boolean;
 }
 
 const initialState: initData = {
   statusQuery: false,
   data: [],
+  dataFetched: false
 };
 
 export const dataAppSlice = createSlice({
@@ -19,7 +21,8 @@ export const dataAppSlice = createSlice({
     },
     dbSetProducts: ( state, { payload }) => {
         state.statusQuery = false;
-        state.data = payload
+        state.data = payload.data
+        state.dataFetched = true;
     }
   },
 });

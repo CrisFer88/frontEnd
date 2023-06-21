@@ -82,7 +82,7 @@ export const Register = () => {
   const {
     values,
     errors,
-    handleChange: onSingUpInputChange,
+    handleChangeInput: onSingUpInputChange,
     handleOnBlur,
     isFormValid,
     onResetForm,

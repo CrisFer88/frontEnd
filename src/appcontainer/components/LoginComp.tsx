@@ -50,7 +50,7 @@ export const LoginComp = () => {
   const {
     values,
     errors,
-    handleChange: onLoginInputChange,
+    handleChangeInput: onLoginInputChange,
     handleOnBlur,
     isFormValid,
     onResetForm,

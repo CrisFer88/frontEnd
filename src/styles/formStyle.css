@@ -28,6 +28,8 @@
   font-weight: bold;
   font-size: 25px;
 }
+
+
 .container__form--subtitle {
   padding: 5px 0px 5px 0px;
   display: flex;
@@ -133,7 +135,10 @@
   font-size: 15px;
 }
 
-.input__field{
+
+
+.select__field{
+  width: auto;
   border: 0px;
   border-bottom: #F25E5E  solid 1px;
   background-color: #FFFFFF;
@@ -287,11 +292,19 @@ y los modificadores a los cambios de ese bloque
   border: 0 solid;
   border-bottom: #f25e5e solid 0.2px;
 }
-.fieldform--center input {
+.fieldform--center input{
   border: 0 solid;
   border-bottom: #f25e5e solid 0.2px;
   text-align: center;
 }
+
+.input__field{
+  border: 0px;
+  border-bottom: #F25E5E  solid 1px;
+  background-color: #FFFFFF;
+  text-align: center;
+}
+
 .errormsg {
   font-weight: bold;
   color: red;
