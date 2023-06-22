@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { getAllItems, useAppDispatch, useAppSelector } from "../../../store";
-import "../../../styles/formStyle.css";
+// import "../../../styles/formStyle.css";
 import ReactDatePicker from "react-datepicker";
 import useForm from "../../../hooks/useForm";
+import { regexEmpty } from "../../../utils/regexVar";
+import { useModal } from "../../../hooks/useModal";
+import Modal from "../ui/Modal";
 
 interface dataInterf {
   itemc_id: string;
@@ -37,11 +40,48 @@ const initFormState: initFS = {
   color_name: "",
 };
 
-export const NewOrder = () => {
+export const NewStackForm = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const { isOpen, closeModal, openModal, classNameModal } = useModal(false);
   const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.datApp);
   const { statusQuery, data, dataFetched } = respu;
+
+  const formValidations = {
+    itemc_name: [
+      (value: string) => {
+        const regex = regexEmpty;
+        return regex.test(value);
+      },
+      "Product class is required.",
+      "require",
+    ],
+    itemt_name: [
+      (value: string) => {
+        const regex = regexEmpty;
+        return regex.test(value);
+      },
+      "Component is required.",
+      "require",
+    ],
+    skusize_name: [
+      (value: string) => {
+        const regex = regexEmpty;
+        return regex.test(value);
+      },
+      "Sku or Size is required.",
+      "require",
+    ],
+    color_name: [
+      (value: string) => {
+        const regex = regexEmpty;
+        return regex.test(value);
+      },
+      "Color is required.",
+      "require",
+    ],
+  };
+
   const {
     values,
     errors,
@@ -50,7 +90,7 @@ export const NewOrder = () => {
     handleOnBlur,
     isFormValid,
     onResetForm,
-  } = useForm(initFormState);
+  } = useForm(initFormState, formValidations);
 
   useEffect(() => {
     return () => {
@@ -67,20 +107,27 @@ export const NewOrder = () => {
     }
   });
 
-  
   const optionSkusize = optionComponents.map((elem: dataInterf, index) =>
-  elem.ParaItemTypes.filter((ParaType, index) => {
-    if (ParaType.itemt_name === values.itemt_name) {
-      values.itemt_shortname = ParaType.itemt_shortname;
-      return ParaType.ParaSkuSizes;
-    }
-  }));
-  
-  console.log(values);
-
+    elem.ParaItemTypes.filter((ParaType) => {
+      if (ParaType.itemt_name === values.itemt_name) {
+        values.itemt_shortname = ParaType.itemt_shortname;
+        return ParaType.ParaSkuSizes;
+      }
+    })
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const data = {
+      ...values,
+    };
+    console.log(isFormValid, errors);
+
+    if (!isFormValid) {
+      openModal();
+    } else {
+      console.log(data);
+    }
   };
 
   if (statusQuery) {
@@ -92,16 +139,31 @@ export const NewOrder = () => {
   } else {
     return (
       <div className="container__form">
+        <Modal isOpen={isOpen} closeModal={closeModal} classNameModal="modalA">
+          <div className="modal__headerA">
+            <p className="es">Estos son los errores en el formulario:</p>
+            <p className="en">These are the present error in the form.</p>
+          </div>
+          <div className="modal__bodyA">
+
+              {Object.values(errors).map(
+                (e, index) => !!e && <p key={index}>{e}</p>
+              )}
+          </div>
+        </Modal>
         {/* Tititulo del formulario */}
-        <div className="container__form--title">
+        {/* <div className="container__form--title">
           <p> NEW ORDER </p>
-        </div>
+        </div> */}
         <div className="container__form--body">
           {/* Inicio del formulario */}
-          <form onSubmit={handleSubmit} className="form__options">
-            <p className="container__form--subtitle"> CURRENT INFO: </p>
+          <form
+            onSubmit={handleSubmit}
+            className="form__options"
+            autoComplete="none"
+          >
             <div className="col center">
-              <div className="fieldform--center">
+              <div className="input__spetialfieldform">
                 <ReactDatePicker
                   selected={startDate}
                   onChange={(date: Date) => setStartDate(date)}
@@ -136,26 +198,28 @@ export const NewOrder = () => {
 
             <div className="col center">
               <label className="label__title">COMPONENT:</label>
-              <select
-                name="itemt_name"
-                className="select__field"
-                value={values.itemt_name}
-                onChange={onNewOrder}
-              >
-                <option key="itemt_1"></option>
-                {optionComponents.map((elem: dataInterf, index) =>
-                  elem.ParaItemTypes.map((ParaType, index) => (
-                    <option key={index}>{ParaType.itemt_name}</option>
-                  ))
-                )}
-              </select>
-              <div className="fieldform">
-                <input
-                  className="input__field"
-                  name="itemt_shortname"
-                  onChange={onNewOrderInput}
-                  value={values.itemt_shortname}
-                ></input>
+              <div className="row">
+                <select
+                  name="itemt_name"
+                  className="select__field"
+                  value={values.itemt_name}
+                  onChange={onNewOrder}
+                >
+                  <option key="itemt_1"></option>
+                  {optionComponents.map((elem: dataInterf, index) =>
+                    elem.ParaItemTypes.map((ParaType, index) => (
+                      <option key={index}>{ParaType.itemt_name}</option>
+                    ))
+                  )}
+                </select>
+                <div className="fieldform">
+                  <input
+                    className="input__field--short"
+                    name="itemt_shortname"
+                    onChange={onNewOrderInput}
+                    value={values.itemt_shortname}
+                  ></input>
+                </div>
               </div>
             </div>
 
@@ -168,13 +232,12 @@ export const NewOrder = () => {
                 onChange={onNewOrder}
               >
                 <option key="itemt_1"></option>
-                {
-                  optionSkusize.length > 0 && (optionSkusize[0].map((ele, index) => (
-                    ele.ParaSkuSizes.map(( ss, index ) => (
+                {optionSkusize.length > 0 &&
+                  optionSkusize[0].map((ele, index) =>
+                    ele.ParaSkuSizes.map((ss, index) => (
                       <option key={index}>{ss.skusize_name}</option>
                     ))
-                  )))
-                }
+                  )}
               </select>
             </div>
 

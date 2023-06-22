@@ -6,11 +6,18 @@
 
 
 .container__form {
-  width: 1000px;
+  width: 100%;
   padding-top: 30px;
   display: block;
   margin: 0 auto;
   overflow: hidden;
+  
+}
+
+.form__options{
+  border: #426A8C solid 1px;
+  padding: 1rem;
+  border-radius: 15px;
 }
 
 .container__shortform {
@@ -77,10 +84,11 @@
 }
 
 .row {
-  padding: 20px 0px 10px 0px;
+  /* border: #426A8C;
+  border-bottom-style: double; */
+  border-bottom: #F25E5E  solid 1px;
   display: flex;
-  border: #426A8C;
-  border-bottom-style: double;
+  padding: 20px 0px 10px 0px;
 }
 
 .center{
@@ -106,6 +114,7 @@
   flex-direction: column;
   justify-items: center;
   align-items: center;
+  padding: 30px 0px 0px 0px ;
 }
 
 .p__field{
@@ -135,10 +144,8 @@
   font-size: 15px;
 }
 
-
-
 .select__field{
-  width: auto;
+  min-width: 100px;
   border: 0px;
   border-bottom: #F25E5E  solid 1px;
   background-color: #FFFFFF;
@@ -160,9 +167,9 @@
   border: none;
   color: #FFFFFF;
   text-align: center;
-  font-size: 28px;
+  font-size: 25px;
   padding: 5px;
-  width: 150px;
+  width: 110px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
@@ -288,19 +295,26 @@ y los modificadores a los cambios de ese bloque
   color: black;
 }
 
-.fieldform input {
-  border: 0 solid;
-  border-bottom: #f25e5e solid 0.2px;
-}
-.fieldform--center input{
+
+
+.input__spetialfieldform input {
   border: 0 solid;
   border-bottom: #f25e5e solid 0.2px;
   text-align: center;
-}
+  width: 100px;
+} 
 
 .input__field{
   border: 0px;
   border-bottom: #F25E5E  solid 1px;
+  background-color: #FFFFFF;
+  text-align: center;
+}
+
+.input__field--short{
+  width: 30px;
+  border: 0px;
+  /* border-bottom: #F25E5E  solid 1px; */
   background-color: #FFFFFF;
   text-align: center;
 }

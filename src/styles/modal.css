@@ -27,10 +27,8 @@
   max-height: 230px;
   background-color: #fff;
   overflow: hidden;
+  overflow-y: auto;
   padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;  
 }
 .modal__button {
   position: absolute;
@@ -46,11 +44,25 @@
   color: var(--colorMC-Pink);
 }
 
-.modal__center{
+.modal__center {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ############################################  HEADER */
+.modalA{
+  display: flex;
+  flex-direction: column;
+}
+.modal__headerA {
+ border: 0;
+ border-bottom: #f25e5e 1px solid;
+ padding-bottom: 3px;
+}
+.modal__bodyA{
+  padding-top: 10px;
 }
 
 /* Estilos segun el contenido del model */

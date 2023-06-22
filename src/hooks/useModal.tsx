@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-export const useModal = ( initState: boolean = false) => {
+export const useModal = ( initState: boolean = false, classNameModal?: string) => {
   const [isOpen, setIsOpen] = useState(initState)
 
 
@@ -12,7 +12,8 @@ export const useModal = ( initState: boolean = false) => {
   return{
     isOpen,
     openModal,
-    closeModal
+    closeModal,
+    classNameModal
   }
 
 

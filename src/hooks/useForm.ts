@@ -1,12 +1,12 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const useForm = <T>(initialValues: T, formValidations: object = {}) => {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Partial<T>>({});
 
-  // useEffect(() => {
-  //   validationForm();
-  // }, [values]);
+  useEffect(() => {
+    validationForm();
+  }, [values]);
 
   //se memoriza el valor de la variable que contiene la validacion total del formulario
   const isFormValid = useMemo(() => {
@@ -61,20 +61,20 @@ export const useForm = <T>(initialValues: T, formValidations: object = {}) => {
     setValues(initialValues);
 }
 
-  // const validationForm = () => {
-  //   const formCheckedValues: object = {};
+  const validationForm = () => {
+    const formCheckedValues: object = {};
 
-  //   for (const formField of Object.keys(formValidations)) {
-  //     const [fn, errorMessage] = (formValidations as any)[formField];
-  //     (formCheckedValues as any)[`${formField}Valid`] = fn(
-  //       (values as any)[formField]
-  //     )
-  //       ? null
-  //       : errorMessage;
-  //   }
+    for (const formField of Object.keys(formValidations)) {
+      const [fn, errorMessage] = (formValidations as any)[formField];
+      (formCheckedValues as any)[`${formField}Valid`] = fn(
+        (values as any)[formField]
+      )
+        ? null
+        : errorMessage;
+    }
 
-  //   setErrors(formCheckedValues);
-  // };
+    setErrors(formCheckedValues);
+  };
 
   return {
     values,
@@ -83,7 +83,7 @@ export const useForm = <T>(initialValues: T, formValidations: object = {}) => {
     handleChangeSelect,
     handleOnBlur,
     isFormValid,
-    onResetForm
+    onResetForm,
   };
 };
 

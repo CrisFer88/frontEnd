@@ -23,11 +23,16 @@ export const dataAppSlice = createSlice({
         state.statusQuery = false;
         state.data = payload.data
         state.dataFetched = true;
-    }
+    },
+    dbSetColor: ( state, { payload }) => {
+      state.statusQuery = false;
+      state.data = payload.data
+      state.dataFetched = true;
+  }
   },
 });
 
 
-export const { startConnection, dbSetProducts } =  dataAppSlice.actions;
+export const { startConnection, dbSetProducts, dbSetColor } =  dataAppSlice.actions;
 
 export default dataAppSlice.reducer;

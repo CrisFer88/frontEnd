@@ -32,40 +32,41 @@ export const NewStack = () => {
     // console.log(isOpen);
     return (
       <>
-        <button onClick={openModal}>Abrir Modal</button>
-        <Modal isOpen={isOpen} closeModal={closeModal}>
-          <div className="modal--Label">
-            <h3>Este es el Modal</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
-              obcaecati nobis consequatur quae consectetur cupiditate delectus
-              rem saepe in vitae excepturi nostrum, est aliquam alias
-              necessitatibus unde nam! Reprehenderit, doloribus.
-            </p>
+        <Modal isOpen={isOpen} closeModal={closeModal} classNameModal="modalA">
+          <div className="modal__headerA">
+            <p className="es">Estos son los errores en el formulario:</p>
+            <p className="en">These are the present error in the form.</p>
+          </div>
+          <div className="modal__bodyA">
+            {/* {Object.values(errors).map(
+              (e, index) => !!e && <p key={index}>{e}</p>
+            )} */}
           </div>
         </Modal>
         <div className="container__form ">
           {/* Tititulo del formulario */}
-          <div className="container__form--title">
+          {/* <div className="container__form--title">
             <p> NEW STACK </p>
-          </div>
+          </div> */}
           {/* Contenedor del formulario */}
           <div className="container__form--body">
             {/* Inicio del formulario */}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="form__options">
               <p className="container__form--subtitle"> CURRENT INFO: </p>
 
-              <div className="fieldform--center">
-                <DatePicker
-                  selected={startDate}
-                  onChange={(date: Date) => setStartDate(date)}
-                  name="singUpDate"
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  placeholderText="Birthday"
-                />
+              <div className="col center">
+                <div className="input__spetialfieldform">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date: Date) => setStartDate(date)}
+                    name="singUpDate"
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="Birthday"
+                  />
+                </div>
               </div>
 
               <div className="fieldform">

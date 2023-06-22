@@ -1,17 +1,21 @@
-import  { ReactNode } from "react";
-import '../../../styles/modal.css'
+import { ReactNode } from "react";
+import "../../../styles/modal.css";
 interface Props {
   children?: ReactNode;
   isOpen: boolean;
   closeModal: () => void;
+  classNameModal?: string;
 }
 
-const Modal = ({ children, isOpen, closeModal }: Props) => {
+const Modal = ({ children, isOpen, closeModal, classNameModal }: Props) => {
   return (
-    <article className={`${ isOpen ? 'modal modal--open': 'modal'}`}>
-      <div className="modal__container">
-        <button className="modal__button" onClick={ closeModal }> X </button>
-        {children}</div>
+    <article className={`${isOpen ? "modal modal--open" : "modal"}`}>
+      <div className={`modal__container ${classNameModal}`}>
+        <button className="modal__button" onClick={closeModal}>
+          X
+        </button>
+        {children}
+      </div>
     </article>
   );
 };

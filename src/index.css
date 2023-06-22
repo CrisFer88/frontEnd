@@ -37,6 +37,8 @@ body{
   height: 100vh;
 }
 
+
+
 .apologize{
   width: 1000px;
   padding: 80px 20px;
@@ -56,9 +58,71 @@ body{
   max-width: 712px;
   margin: auto;
   overflow: hidden;
+  overflow-y: auto;
 }
 
 }
+
+
+
+
+/*-----------------------------------------------------------------
+
+                                              CONFIG PAGES
+
+*/
+.page__flex{
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.dir__col{
+  flex-direction: column;
+}
+
+.dir__row{
+  flex-direction: row;
+}
+
+.es{
+  font-weight: bold;
+  color: #F25E5E;
+}
+.en{
+  font-weight: bold;
+  color: #426A8C;
+}
+
+.page__paragraph--center{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin: 30px 0px 20px 0px;
+}
+.checkbox__option{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox{
+  display: block;
+  padding: 2px 10px 2px 10px;
+}
+
+
+
+
+/*#############################################################################
+
+                                                  RESPONSIVE
+    
+
+*/
+
 
 @media print {
 
