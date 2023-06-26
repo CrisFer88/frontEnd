@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react'
-import { getClass, getFunction, useAppDispatch, useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 
 export const NewParamaterPage = () => {
     const dispatch = useAppDispatch();
-    const respu = useAppSelector((state) => state.datApp);
+    const respu = useAppSelector((state) => state.productsApp);
     const { statusQuery, data, dataFetched } = respu;
 
     useEffect(() => {
         return () => {
           if (!dataFetched) {
-            dispatch(getClass());
-            dispatch(getFunction());
+            console.log('ok');
           }
         };
       }, []);
 
-    console.log(data);
+    // console.log(data);
 
 
   return (

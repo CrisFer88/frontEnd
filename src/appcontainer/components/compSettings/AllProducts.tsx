@@ -4,7 +4,7 @@ import { getAllItems, useAppDispatch, useAppSelector} from "../../../store";
 
 export const AllProducts = () => {
   const dispatch = useAppDispatch();
-  const respu = useAppSelector((state) => state.datApp);
+  const respu = useAppSelector((state) => state.productsApp);
   const { statusQuery, data: products, dataFetched } = respu;
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export const AllProducts = () => {
       dispatch(getAllItems());
       }
     };
-  }, []);
+  }, [dataFetched]);
 
   if (statusQuery) {
     return (

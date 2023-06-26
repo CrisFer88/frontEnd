@@ -2,13 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./auth/authSlice";
-import dataAppSlice from "./dataApp/dataAppSlice";
+import productsSlice from "./dataApp/productsSlice";
 // ...
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
-    datApp: dataAppSlice
+    productsApp: productsSlice
   },
 });
 

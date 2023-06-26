@@ -44,7 +44,7 @@ export const NewStackForm = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { isOpen, closeModal, openModal, classNameModal } = useModal(false);
   const dispatch = useAppDispatch();
-  const respu = useAppSelector((state) => state.datApp);
+  const respu = useAppSelector((state) => state.productsApp);
   const { statusQuery, data, dataFetched } = respu;
 
   const formValidations = {
