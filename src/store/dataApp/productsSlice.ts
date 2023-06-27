@@ -20,13 +20,15 @@ export const productsSlice = createSlice({
       state.statusQuery = true;
     },
     dbSetProducts: ( state, action: PayloadAction< initData >) => {
-        state.statusQuery = false;
-        state.data = action.payload.data
-        state.dataFetched = true;
+        state.statusQuery = action.payload.statusQuery;
+        state.data = action.payload.data;
+        state.dataFetched = action.payload.dataFetched;
     }
 }});
+
 
 
 export const { startConnection, dbSetProducts } =  productsSlice.actions;
 
 export default productsSlice.reducer;
+

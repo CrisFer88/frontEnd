@@ -3,12 +3,14 @@ import type { TypedUseSelectorHook } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./auth/authSlice";
 import productsSlice from "./dataApp/productsSlice";
+import parameterClasesSlice from "./dataApp/parameterClasesSlice";
 // ...
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
-    productsApp: productsSlice
+    productsApp: productsSlice,
+    clasesApp: parameterClasesSlice
   },
 });
 

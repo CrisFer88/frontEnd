@@ -120,7 +120,7 @@ export const Register = () => {
   return (
     <div className="container-left">
       <div className="container__login">
-        <div className="container__Login--tittle">
+        <div className="container__title">
           <h3>SING UP</h3>
         </div>
         <form onSubmit={registerSubmit}>

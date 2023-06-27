@@ -6,7 +6,10 @@ export { LoginComp } from './components/LoginComp'
 export { NewStackForm } from './components/compProduction/NewStackForm'
 export { NewStack } from './components/compProduction/NewStack'
 //SETTING COMPONENTS
-export { AllProducts } from './components/compSettings/AllProducts'
+export { default as AllProducts } from './components/compSettings/AllProducts'
+export { default as AllClases } from './components/compSettings/AllClases'
+export { default as AllColorAssignment } from './components/compSettings/AllColorAssignment'
+export { default as AllColors }  from './components/compSettings/AllColors'
 
 
 //############################################################PAGES

@@ -1,19 +1,19 @@
 import { useEffect } from "react";
 import "../../../styles/tableStyleOne.css";
 import { getAllItems, useAppDispatch, useAppSelector} from "../../../store";
-
-export const AllProducts = () => {
+const AllProducts = () => {
   const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.productsApp);
   const { statusQuery, data: products, dataFetched } = respu;
 
   useEffect(() => {
     return () => {
+      console.log('validacion Products: ',dataFetched);
       if (!dataFetched) {
       dispatch(getAllItems());
       }
     };
-  }, [dataFetched]);
+  }, [dataFetched ]);
 
   if (statusQuery) {
     return (
@@ -70,3 +70,5 @@ export const AllProducts = () => {
     );
   }
 };
+
+export default AllProducts;

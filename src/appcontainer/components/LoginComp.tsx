@@ -72,7 +72,7 @@ export const LoginComp = () => {
   return (
     <div className="container-right">
       <div className="container__login">
-        <div className="container__Login--tittle">
+        <div className="container__title">
           <h3>LOGIN</h3>
         </div>
         <form onSubmit={loginSubmit}>
