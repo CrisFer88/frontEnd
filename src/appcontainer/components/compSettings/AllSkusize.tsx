@@ -1,5 +1,4 @@
 import {
-  apiClasse,
   apiSkuSize,
   useAppDispatch,
   useAppSelector,

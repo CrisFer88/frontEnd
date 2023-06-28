@@ -1,6 +1,7 @@
 import { transactionApi } from "../../api";
 import { useAppDispatch } from "../store";
 import { dbSetClase, startConnClasse } from "./parameterClasesSlice";
+import { dbSetColorAssig, startConnColorAssig } from "./parameterColorAssigment";
 import { dbSetColor , startConnColor } from "./parameterColorSlice";
 import { dbSetSkuSize, startConnSkuSize } from "./parameterSkuSize";
 import { dbSetProducts, startConnection } from "./productsSlice";
@@ -58,7 +59,7 @@ const apiSkuSize = () => {
       const response = await transactionApi.get("parameters/skusize");
       const data = Object.values(response.data)[1] as [] ;
       dispatch(dbSetSkuSize({ statusQuery: false, data, dataFetched: true }));
-      console.log('SkuSize Thunk',data);
+      // console.log('SkuSize Thunk',data);
     } catch (error) {
       console.error(error);
     }
@@ -66,10 +67,26 @@ const apiSkuSize = () => {
 }
 
 
+const apiColorAssigment= () => {
+  return async (dispatch: ReturnType<typeof useAppDispatch>) => {
+    dispatch(startConnColorAssig());
+
+    try {
+      const response = await transactionApi.get("parameters/colorassigment");
+      const data = Object.values(response.data)[1] as [] ;
+      dispatch(dbSetColorAssig({ statusQuery: false, data, dataFetched: true }));
+      console.log('color Assigment Thunk',data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
 
 export {
   getAllItems,
   apiClasse,
   apiColor,
-  apiSkuSize
+  apiSkuSize,
+  apiColorAssigment
 }

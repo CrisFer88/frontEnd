@@ -14,7 +14,7 @@
   justify-items: center;
   margin: 10px 0px 0px 0px;
   display: grid;
-  width: 800px;
+  width: 600px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
   gap: 60px;
 }
@@ -23,7 +23,7 @@
   box-shadow: 0 0 3px #f25e5e;
   border-radius: 10px;
   height: 350px;
-  width: 270px;
+  width: 310px;
   overflow-y: hidden;
 
 }
@@ -45,7 +45,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  margin: 10px;
 }
 
 .SVcontainer__title {
@@ -63,7 +63,7 @@
 .SVform__field {
   display: flex;
   flex-direction: column;
-  margin: 2px 0px 2px 0px;
+  margin-top: 10px;
   padding: 2px 0px 2px 0px;
 }
 
@@ -150,7 +150,8 @@
 
 .SVlist__item {
   display: flex;
-  margin-top: 3px;
+  margin-top: 5px;
+  border-bottom: #64819b 1px dashed;
 }
 
 .SVlist__item--field {

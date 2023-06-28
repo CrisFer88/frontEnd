@@ -6,6 +6,7 @@ import productsSlice from "./dataApp/productsSlice";
 import parameterClasesSlice from "./dataApp/parameterClasesSlice";
 import parameterColorSlice  from "./dataApp/parameterColorSlice";
 import parameterSkuSize  from "./dataApp/parameterSkuSize";
+import parameterColorAssigment from "./dataApp/parameterColorAssigment";
 // ...
 
 export const store = configureStore({
@@ -14,7 +15,8 @@ export const store = configureStore({
     productsApp: productsSlice,
     clasesApp: parameterClasesSlice,
     colorApp: parameterColorSlice,
-    skuSizeApp: parameterSkuSize
+    skuSizeApp: parameterSkuSize,
+    colorAssigApp: parameterColorAssigment
   },
 });
 
