@@ -1,6 +1,8 @@
 import { transactionApi } from "../../api";
 import { useAppDispatch } from "../store";
-import { dbSetClase } from "./parameterClasesSlice";
+import { dbSetClase, startConnClasse } from "./parameterClasesSlice";
+import { dbSetColor , startConnColor } from "./parameterColorSlice";
+import { dbSetSkuSize, startConnSkuSize } from "./parameterSkuSize";
 import { dbSetProducts, startConnection } from "./productsSlice";
 
  const getAllItems = () => {
@@ -18,10 +20,9 @@ import { dbSetProducts, startConnection } from "./productsSlice";
   };
 };
 
-
-const getAllClases = () => {
+const apiClasse = () => {
   return async (dispatch: ReturnType<typeof useAppDispatch>) => {
-    dispatch(startConnection());
+    dispatch(startConnClasse());
 
     try {
       const response = await transactionApi.get("parameters/newItemClass");
@@ -34,8 +35,41 @@ const getAllClases = () => {
   };
 }
 
+const apiColor = () => {
+  return async (dispatch: ReturnType<typeof useAppDispatch>) => {
+    dispatch(startConnColor());
+
+    try {
+      const response = await transactionApi.get("parameters/color");
+      const data = Object.values(response.data)[1] as [] ;
+      dispatch(dbSetColor({ statusQuery: false, data, dataFetched: true }));
+      // console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+const apiSkuSize = () => {
+  return async (dispatch: ReturnType<typeof useAppDispatch>) => {
+    dispatch(startConnSkuSize());
+
+    try {
+      const response = await transactionApi.get("parameters/skusize");
+      const data = Object.values(response.data)[1] as [] ;
+      dispatch(dbSetSkuSize({ statusQuery: false, data, dataFetched: true }));
+      console.log('SkuSize Thunk',data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+
 
 export {
   getAllItems,
-  getAllClases
+  apiClasse,
+  apiColor,
+  apiSkuSize
 }

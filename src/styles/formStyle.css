@@ -134,9 +134,7 @@
 .col__select--item {
   padding: 10px 5px 0px 2px;
 }
-.label__title {
-  font-size: 15px;
-}
+
 
 .select__field {
   min-width: 100px;
@@ -166,15 +164,6 @@
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
-}
-
-.button1 {
-  font-size: 10px;
-  width: 70px;
-}
-
-.button1:hover span {
-  padding-right: -50px;
 }
 
 .button__form span {
@@ -207,10 +196,6 @@
   background-color: #64819b;
 }
 
-.container__buttons--center {
-  display: flex;
-  justify-content: center;
-}
 
 /* -------------------------- */
 
@@ -231,69 +216,14 @@ y los modificadores a los cambios de ese bloque
     .btn--big{}
 */
 
-.container__cards {
-  justify-items: center;
-  margin: 10px 0px 0px 0px;
-  display: grid;
-  width: 800px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
-  gap: 10px;
-}
 
-.container__components {
-  display: flex;
-  justify-content: center;
-}
 
-.container__center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
 
-.card__view {
-  box-shadow: 0 0 3px #f25e5e;
-  border-radius: 10px;
-  height: 350px;
-  width: 270px;
-  overflow-y: hidden;
-}
 
-.container__items {
-  display: flex;
-  flex-direction: column;
-  margin: 2px;
-  overflow-y: scroll;
-  height: 200px;
-  width: 95%;
-}
-
-.container__params {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-.list__item {
-  display: flex;
-  align-items: center;
-  margin-top: 3px;
-}
-.list__item--name{
-  width: 100%;
-}
-.list__item--img {
-  margin-left: 3px;
-}
-.list__item--img img {
-  height: 20px;
-  width: 20px;
-}
 
 .container-X2-Col {
   display: flex;
-  margin-top: 25%;
+  margin-top: 15%;
 }
 .total--height {
   height: 100%;
@@ -332,13 +262,13 @@ y los modificadores a los cambios de ese bloque
   width: 50%;
 }
 
-.container__title {
+/* .container__title {
   display: flex;
   justify-content: center;
   color: #426a8c;
   border-bottom: #f25e5e 2px solid;
   margin: 0px 0px 10px 0px;
-}
+} */
 .center-tittle {
   max-width: 100%;
 }

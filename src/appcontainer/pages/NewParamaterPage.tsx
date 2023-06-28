@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { AllClases, AllColorAssignment, AllColors } from "../../appcontainer";
-import "../../styles/formStyle.css";
+import "../../styles/settingsView.css";
+import AllSkuSize from "../components/compSettings/AllSkusize";
 
 export const NewParamaterPage = () => {
   const dispatch = useAppDispatch();
@@ -20,23 +21,23 @@ export const NewParamaterPage = () => {
 
   return (
     <>
-      <div className="container__components">
-        <div className="container__cards">
-          <div className="card__view">
+      <div className="SVcontainer__components">
+        <div className="SVcontainer__cards">
+          <div className="SVcard__view">
             <AllClases />
           </div>
-          <div className="card__view">
+          <div className="SVcard__view">
             <AllColors />
           </div>
-          <div className="card__view">
+          <div className="SVcard__view">
+            <AllSkuSize />
+          </div>
+          <div className="SVcard__view">
             <AllColorAssignment />
           </div>
-          {/* <div className="card__view">
-          <AllClases />
-        </div> */}
         </div>
       </div>
-      <div className="container__params">
+      <div className="SVcontainer__params">
         <h3>Parameters assigments</h3>
       </div>
     </>

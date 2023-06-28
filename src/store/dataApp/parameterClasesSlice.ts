@@ -16,7 +16,7 @@ export const parameterClasesSlice = createSlice({
   name: "clasesApp",
   initialState,
   reducers: {
-    startConnection: (state) => {
+    startConnClasse: (state) => {
       state.statusQuery = true;
     },
     dbSetClase: (state, action: PayloadAction<initData>) => {
@@ -27,6 +27,6 @@ export const parameterClasesSlice = createSlice({
   },
 });
 
-export const { startConnection, dbSetClase} =  parameterClasesSlice.actions;
+export const { startConnClasse, dbSetClase} =  parameterClasesSlice.actions;
 
 export default parameterClasesSlice.reducer;

@@ -2,6 +2,7 @@ import React, {useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useForm from "../../hooks/useForm";
+import "../../styles/formStyle.css";
 import {
   regexBasicPassword,
   regexEmail,

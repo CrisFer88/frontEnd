@@ -1,0 +1,175 @@
+:root {
+  --colorMC-Pink: #f25e5e;
+  --colorMC-BlueDark: #426a8c;
+  --colorMC-BlueLigth: #45718c;
+}
+
+/* ############################################################## */
+.SVcontainer__components {
+  display: flex;
+  justify-content: center;
+}
+
+.SVcontainer__cards {
+  justify-items: center;
+  margin: 10px 0px 0px 0px;
+  display: grid;
+  width: 800px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  gap: 60px;
+}
+
+.SVcard__view {
+  box-shadow: 0 0 3px #f25e5e;
+  border-radius: 10px;
+  height: 350px;
+  width: 270px;
+  overflow-y: hidden;
+
+}
+
+.SVcontainer__params {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ############################################################## */
+
+.SVcontainer__center {
+  display: flex;
+  justify-content: center;
+}
+
+.SVcontainer__center--col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.SVcontainer__title {
+  display: flex;
+  justify-content: center;
+  color: #426a8c;
+  border-bottom: #f25e5e 2px solid;
+  margin: 0px 0px 10px 0px;
+}
+
+.SVcontainer__form {
+  width: 90%;
+}
+
+.SVform__field {
+  display: flex;
+  flex-direction: column;
+  margin: 2px 0px 2px 0px;
+  padding: 2px 0px 2px 0px;
+}
+
+.SVform__field input[type="submit"] {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #f25e5e;
+}
+
+.SVform__field input[type="text"], select{
+  border: 0;
+  border-bottom: #f25e5e solid 1px;
+  text-align: center;
+}
+
+.SVform__field--element {
+  flex: 1 1 auto;
+}
+
+.SVform__field--input-container {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+/* ############################################################## */
+/*------------------> BUTTON  <--------------------*/
+
+.SVform__field--button {
+  border-radius: 8px;
+  background-color: #426a8c;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 12px;
+  padding: 5px;
+  width: 70px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.SVform__field--button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.SVform__field--button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.SVform__field--button:hover span {
+  padding-right: 10px;
+}
+
+.SVform__field--button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.SVform__field--button--disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: #64819b;
+}
+
+/* -------------------------- */
+/* ############################################################## */
+
+.SVcontainer__items {
+  display: flex;
+  flex-direction: column;
+  margin: 2px;
+  overflow-y: scroll;
+  height: 200px;
+  width: 100%;
+}
+
+.SVlist__item {
+  display: flex;
+  margin-top: 3px;
+}
+
+.SVlist__item--field {
+  flex: 1 1 auto;
+}
+.SVlist__item img {
+  height: 20px;
+  width: 20px;
+}
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ MODAL */
+
+.SVParagraph__En{
+  color: #426a8c;
+}
+.SVParagraph__Es{
+  color: #f25e5e;
+}
+
+@media screen and (max-width: 712px) {
+}

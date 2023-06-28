@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useAuthStore } from "../../hooks";
 import { useModal } from "../../hooks/useModal";
-import "../../styles/formStyle.css";
 import { LoginComp } from "../components/LoginComp";
 import { Register } from "../components/Register";
 import Modal from "../components/ui/Modal";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllItems, useAppDispatch, useAppSelector } from "../../../store";
-// import "../../../styles/formStyle.css";
+import "../../../styles/formStyle.css";
 import ReactDatePicker from "react-datepicker";
 import useForm from "../../../hooks/useForm";
 import { regexEmpty } from "../../../utils/regexVar";

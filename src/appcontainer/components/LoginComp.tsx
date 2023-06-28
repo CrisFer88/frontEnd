@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "../../hooks/useForm";
 import { regexBasicPassword, regexEmail } from "../../utils/regexVar";
 import { useAuthStore } from "../../hooks";
-
+import "../../styles/formStyle.css";
 
 export const LoginComp = () => {
   const {  startLoging } = useAuthStore();

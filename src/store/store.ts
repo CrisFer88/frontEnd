@@ -4,13 +4,17 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./auth/authSlice";
 import productsSlice from "./dataApp/productsSlice";
 import parameterClasesSlice from "./dataApp/parameterClasesSlice";
+import parameterColorSlice  from "./dataApp/parameterColorSlice";
+import parameterSkuSize  from "./dataApp/parameterSkuSize";
 // ...
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
     productsApp: productsSlice,
-    clasesApp: parameterClasesSlice
+    clasesApp: parameterClasesSlice,
+    colorApp: parameterColorSlice,
+    skuSizeApp: parameterSkuSize
   },
 });
 
