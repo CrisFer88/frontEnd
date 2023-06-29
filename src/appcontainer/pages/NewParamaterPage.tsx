@@ -12,12 +12,12 @@ export const NewParamaterPage = () => {
   useEffect(() => {
     return () => {
       if (!dataFetched) {
-        console.log("ok");
+        // console.log("ok");
       }
     };
   }, []);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <>

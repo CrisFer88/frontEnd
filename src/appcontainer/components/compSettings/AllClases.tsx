@@ -47,7 +47,7 @@ const AllClases = () => {
 
   useEffect(() => {
     return () => {
-      console.log("validacion clases: ", dataFetched);
+      // console.log("validacion clases: ", dataFetched);
       if (!dataFetched) {
         dispatch(apiClasse());
       }

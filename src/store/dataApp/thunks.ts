@@ -75,7 +75,7 @@ const apiColorAssigment= () => {
       const response = await transactionApi.get("parameters/colorassigment");
       const data = Object.values(response.data)[1] as [] ;
       dispatch(dbSetColorAssig({ statusQuery: false, data, dataFetched: true }));
-      console.log('color Assigment Thunk',data);
+      // console.log('color Assigment Thunk',data);
     } catch (error) {
       console.error(error);
     }

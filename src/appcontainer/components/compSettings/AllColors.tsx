@@ -47,7 +47,7 @@ const AllColors = () => {
 
   useEffect(() => {
     return () => {
-      console.log("validacion color: ", dataFetched);
+      // console.log("validacion color: ", dataFetched);
       if (!dataFetched) {
         dispatch(apiColor());
       }

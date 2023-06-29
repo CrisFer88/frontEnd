@@ -48,21 +48,53 @@ export const useForm = <T>(initialValues: T, formValidations: object = {}) => {
     target,
   }: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target;
-    setValues(() => ({
-      ...values,
-      [name]: value,
-    }));
+    // console.log("Target", name, value);
+    // console.log(values);
+    if (!name.includes(".")) {
+      //Si es un select que no tiene hijos, guardara el valor directamente donde corresponde
+
+      setValues(() => ({
+        ...values,
+        [name]: value,
+      }));
+    } else {
+      //En el caso de que traiga un punto accediendo a un parametro va a tomar esta ruta y guardara en el hijo que corresponde
+      const [parentKey, childKey] = name.split(".");
+
+      setValues((prevValues: any) => ({
+        ...prevValues,
+        [parentKey]: {
+          ...prevValues[parentKey],
+          [childKey]: value,
+        },
+      }));
+    }
   };
 
   const handleChangeSelect = ({
     target,
   }: React.ChangeEvent<HTMLSelectElement>) => {
-    // console.log(target);
     const { name, value } = target;
-    setValues(() => ({
-      ...values,
-      [name]: value,
-    }));
+    // console.log("Target", target);
+    // console.log(values);
+    if (!name.includes(".")) {
+      //Si es un select que no tiene hijos, guardara el valor directamente donde corresponde
+      setValues(() => ({
+        ...values,
+        [name]: value,
+      }));
+    } else {
+      //En el caso de que traiga un punto accediendo a un parametro va a tomar esta ruta y guardara en el hijo que corresponde
+      const [parentKey, childKey] = name.split(".");
+
+      setValues((prevValues: any) => ({
+        ...prevValues,
+        [parentKey]: {
+          ...prevValues[parentKey],
+          [childKey]: value,
+        },
+      }));
+    }
   };
 
   const handleOnBlur = ({ target }: React.ChangeEvent<HTMLInputElement>) => {

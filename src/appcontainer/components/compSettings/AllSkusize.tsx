@@ -64,7 +64,7 @@ const AllSkuSize = () => {
 
   useEffect(() => {
     return () => {
-      console.log("validacion skusize: ", dataFetched);
+      // console.log("validacion skusize: ", dataFetched);
       if (!dataFetched) {
         dispatch(apiSkuSize());
       }
@@ -73,7 +73,7 @@ const AllSkuSize = () => {
 
   const handleIndividualItem = (clase: data) => {
     setSelectedItem(true);
-    console.log(clase);
+    // console.log(clase);
     setValues({
       ...values,
       skusize_id: clase.skusize_id,
