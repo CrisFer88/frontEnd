@@ -10,6 +10,7 @@ export { default as AllProducts } from './components/compSettings/AllProducts'
 export { default as AllClases } from './components/compSettings/AllClases'
 export { default as AllColorAssignment } from './components/compSettings/AllColorAssignment'
 export { default as AllColors }  from './components/compSettings/AllColors'
+export { default as AllParameters }  from './components/compSettings/AllParameters'
 
 
 //############################################################PAGES

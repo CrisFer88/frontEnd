@@ -2,6 +2,7 @@ import { apiClasse, useAppDispatch, useAppSelector } from "../../../store";
 import { regexEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import addButton from "../../../assets/icon/add_button.png";
+import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
 import React, {useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
@@ -103,10 +104,20 @@ const AllClases = () => {
           <p>{ msgErrorModal.es }</p>
         </div>
       </Modal>
+
+
+
+
       <div className="SVcontainer__center--col">
+
         <div className="SVcontainer__title">
-          <h3> PRODUCT CLASS </h3>
+        <h3> PRODUCT CLASS </h3>
+          <span onClick={ handleReset } className="SVreset">
+            <img src={ refreshButton } alt="ResetForm" />
+          </span>
         </div>
+
+
         <div className="SVcontainer__form">
           <form>
             <div className="SVform__field">
@@ -118,12 +129,6 @@ const AllClases = () => {
                   name="itemc_name"
                   onChange={handleClases}
                   value={values.itemc_name}
-                />
-                <input
-                  type="submit"
-                  value="X"
-                  className="SVform__field--element"
-                  onClick={handleReset}
                 />
               </div>
             </div>

@@ -2,6 +2,7 @@ import { apiColor, useAppDispatch, useAppSelector } from "../../../store";
 import { regexEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import addButton from "../../../assets/icon/add_button.png";
+import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
 import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
@@ -64,7 +65,7 @@ const AllColors = () => {
     });
   };
 
-  const handleReset = (e: React.MouseEvent<HTMLInputElement>) => {
+  const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     onResetForm();
     setSelectedItem(false);
@@ -84,33 +85,40 @@ const AllColors = () => {
   };
   const handleOnDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    
   };
   const handleOnUpDate = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log("upd");
   };
 
-
-
-
-
   return (
     <>
       <Modal isOpen={isOpen} closeModal={closeModal}>
         <div className="SVParagraph__En">
           <p>En:</p>
-          <p>{ msgErrorModal.en }</p>
+          <p>{msgErrorModal.en}</p>
         </div>
         <div className="SVParagraph__Es">
           <p>Es:</p>
-          <p>{ msgErrorModal.es }</p>
+          <p>{msgErrorModal.es}</p>
         </div>
       </Modal>
+
+
+
       <div className="SVcontainer__center--col">
+
+
         <div className="SVcontainer__title">
           <h3> PRODUCT COLOR </h3>
+          <span onClick={ handleReset } className="SVreset">
+            <img src={ refreshButton } alt="Reset Form" />
+          </span>
         </div>
+
+
+
+
         <div className="SVcontainer__form">
           <form>
             <div className="SVform__field">
@@ -123,12 +131,12 @@ const AllColors = () => {
                   onChange={handleClases}
                   value={values.color_name}
                 />
-                <input
+                {/* <input
                   type="submit"
                   value="X"
                   className="SVform__field--element"
                   onClick={handleReset}
-                />
+                /> */}
               </div>
             </div>
             <div className="SVcontainer__center">

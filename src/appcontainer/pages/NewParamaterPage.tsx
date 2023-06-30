@@ -1,24 +1,14 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { AllClases, AllColorAssignment, AllColors } from "../../appcontainer";
+import {
+  AllClases,
+  AllColorAssignment,
+  AllColors,
+  AllParameters,
+} from "../../appcontainer";
 import "../../styles/settingsView.css";
 import AllSkuSize from "../components/compSettings/AllSkusize";
 
 export const NewParamaterPage = () => {
-  const dispatch = useAppDispatch();
-  const respu = useAppSelector((state) => state.productsApp);
-  const { statusQuery, data, dataFetched } = respu;
-
-  useEffect(() => {
-    return () => {
-      if (!dataFetched) {
-        // console.log("ok");
-      }
-    };
-  }, []);
-
-  // console.log(data);
-
+  //SV Settings View
   return (
     <>
       <div className="SVcontainer__components">
@@ -38,7 +28,15 @@ export const NewParamaterPage = () => {
         </div>
       </div>
       <div className="SVcontainer__params">
-        <h3>Parameters assigments</h3>
+        <div className="SVcard__view">
+          <AllParameters />
+        </div>
+      </div>
+      <div className="SVfooter__container">
+      <div className="SVfooter__contact--info">
+        <p>Correo: cristian@modularclosets.com</p>
+        <p>Número de contacto: +1 (848)-224-9655</p>
+      </div>
       </div>
     </>
   );

@@ -32,6 +32,7 @@ export const useForm = <T>(initialValues: T, formValidations: object = {}) => {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<Partial<T>>({});
 
+  
   useEffect(() => {
     validationForm();
   }, [values]);
@@ -115,7 +116,7 @@ export const useForm = <T>(initialValues: T, formValidations: object = {}) => {
   };
 
   //Funcion que hace el reset del formulario
-  const onResetForm = () => {
+  const onResetForm = ( ) => {
     setValues(initialValues);
   };
 

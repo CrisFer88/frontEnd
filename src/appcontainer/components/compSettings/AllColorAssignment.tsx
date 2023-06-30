@@ -7,6 +7,7 @@ import {
 import { regexEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import addButton from "../../../assets/icon/add_button.png";
+import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
 import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
@@ -124,8 +125,8 @@ const AllColorAssignment = () => {
       color_id: clase.ColorItem.color_id,
       color_name: clase.ColorItem.color_name,
       itemc_id: clase.ParaItemClass.itemc_id,
-      itemc_name: clase.ParaItemClass.itemc_name 
-    })
+      itemc_name: clase.ParaItemClass.itemc_name,
+    });
   };
 
   const handleReset = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -149,7 +150,7 @@ const AllColorAssignment = () => {
   };
   const handleOnDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log('id to deleled:', values.itemk_id);
+    console.log("id to deleled:", values.itemk_id);
   };
   const handleOnUpDate = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -215,9 +216,15 @@ const AllColorAssignment = () => {
         <p> {!!errors.skusize_typeValid && errors.skusize_typeValid}</p> */}
       </Modal>
       <div className="SVcontainer__center--col">
+
+        
         <div className="SVcontainer__title">
-          <h3> COLOR ASSIGMENT </h3>
+          <h3> SKU - SIZE </h3>
+          <span onClick={handleReset} className="SVreset">
+            <img src={refreshButton} alt="Reset Form" />
+          </span>
         </div>
+
         <div className="SVcontainer__form">
           <form>
             <div className="SVform__field">
