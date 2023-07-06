@@ -219,7 +219,7 @@ const AllColorAssignment = () => {
 
         
         <div className="SVcontainer__title">
-          <h3> SKU - SIZE </h3>
+          <h3> COLOR ASSIGMENT </h3>
           <span onClick={handleReset} className="SVreset">
             <img src={refreshButton} alt="Reset Form" />
           </span>

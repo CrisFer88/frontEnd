@@ -141,7 +141,7 @@ const AllSkuSize = () => {
                   className="SVform__field--element"
                   name="skusize_name"
                   onChange={handleClases}
-                  value={values.skusize_name}
+                  value={values.skusize_name.toUpperCase()}
                 />
               </div>
             </div>

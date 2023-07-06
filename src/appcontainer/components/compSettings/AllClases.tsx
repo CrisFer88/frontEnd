@@ -128,7 +128,7 @@ const AllClases = () => {
                   className="SVform__field--element"
                   name="itemc_name"
                   onChange={handleClases}
-                  value={values.itemc_name}
+                  value={values.itemc_name.toUpperCase()}
                 />
               </div>
             </div>

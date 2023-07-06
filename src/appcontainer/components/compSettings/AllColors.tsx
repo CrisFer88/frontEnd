@@ -129,7 +129,7 @@ const AllColors = () => {
                   className="SVform__field--element"
                   name="color_name"
                   onChange={handleClases}
-                  value={values.color_name}
+                  value={values.color_name.toUpperCase()}
                 />
                 {/* <input
                   type="submit"
