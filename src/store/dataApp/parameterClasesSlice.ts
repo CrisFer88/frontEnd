@@ -1,32 +1,34 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
+import { fetchClasses } from "../../thunks/dataApp/classe.thunk";
+import { initApiData } from "../../utils/types";
 
-type initData = {
-  statusQuery: boolean;
-  data: [];
-  dataFetched: boolean;
-};
-
-const initialState: initData = {
-  statusQuery: false,
-  data: [],
+const initialState: initApiData= {
+  isLoading: false,
   dataFetched: false,
+  data: [],
+  error: undefined
 };
 
 export const parameterClasesSlice = createSlice({
   name: "clasesApp",
   initialState,
-  reducers: {
-    startConnClasse: (state) => {
-      state.statusQuery = true;
-    },
-    dbSetClase: (state, action: PayloadAction<initData>) => {
-      state.statusQuery = action.payload.statusQuery;
-      state.data = action.payload.data;
-      state.dataFetched = action.payload.dataFetched;
-    },
-  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchClasses.pending, ( state ) => {
+      state.isLoading = true;
+    })
+    builder.addCase( fetchClasses.fulfilled, ( state, action) => {
+      state.isLoading = false;
+      state.dataFetched = true;
+      state.data = action.payload;
+    })
+    builder.addCase ( fetchClasses.rejected , (state, action)=> {
+      state.isLoading= false;
+      state.error = action.error.message;
+    }) 
+  }
 });
 
-export const { startConnClasse, dbSetClase} =  parameterClasesSlice.actions;
+// export const { startConnClasse, dbSetClase} =  parameterClasesSlice.actions;
 
 export default parameterClasesSlice.reducer;

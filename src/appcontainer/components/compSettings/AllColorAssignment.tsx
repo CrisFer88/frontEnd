@@ -1,6 +1,4 @@
 import {
-  apiColorAssigment,
-  apiSkuSize,
   useAppDispatch,
   useAppSelector,
 } from "../../../store";
@@ -11,12 +9,14 @@ import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
 import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
+import ButtonGroup from "../ui/ButtonGroup";
+import { fetchColorAssignment } from "../../../thunks/dataApp/colorassignment.thunk";
 
 const AllColorAssignment = () => {
   const dispatch = useAppDispatch();
   //COLOR ASSIGMENT store
   const respu = useAppSelector((state) => state.colorAssigApp);
-  const { statusQuery, data: colorAssig, dataFetched } = respu;
+  const { isLoading, data: colorAssig, dataFetched } = respu;
   //PRODUCT CLASS store
   const respu2 = useAppSelector((state) => state.clasesApp);
   const { data: classes } = respu2;
@@ -110,7 +110,7 @@ const AllColorAssignment = () => {
     return () => {
       // console.log("validacion Color assigment: ", dataFetched);
       if (!dataFetched) {
-        dispatch(apiColorAssigment());
+        dispatch(fetchColorAssignment());
       }
     };
   }, [dataFetched]);
@@ -261,34 +261,18 @@ const AllColorAssignment = () => {
                 </select>
               </div>
             </div>
-
             <div className="SVcontainer__center">
-              <button
-                className="SVform__field--button"
-                onClick={handleOnSave}
-                disabled={selectedItem}
-              >
-                <span>SAVE</span>
-              </button>
-              <button
-                className="SVform__field--button"
-                onClick={handleOnDelete}
-                disabled={!selectedItem}
-              >
-                <span>DELETE</span>
-              </button>
-              <button
-                className="SVform__field--button"
-                onClick={handleOnUpDate}
-                disabled={!selectedItem}
-              >
-                <span>UPDATE</span>
-              </button>
+              <ButtonGroup
+                onSave={handleOnSave}
+                onDelete={handleOnDelete}
+                onUpdate={handleOnUpDate}
+                selectedItem={selectedItem}
+              />
             </div>
           </form>
         </div>
         <div className="SVcontainer__items">
-          {statusQuery ? (
+          {isLoading? (
             <p> Loading </p>
           ) : (
             colorAssig.map((clase: data, index: number) => (

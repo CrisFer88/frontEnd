@@ -1,4 +1,4 @@
-import { apiSkuSize, useAppDispatch, useAppSelector } from "../../../store";
+import { useAppDispatch, useAppSelector } from "../../../store";
 import { regexEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import addButton from "../../../assets/icon/add_button.png";
@@ -6,24 +6,20 @@ import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
 import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
+import { dataSkuSize } from "../../../utils/types";
+import ButtonGroup from "../ui/ButtonGroup";
+import { fetchSkuSize } from "../../../thunks/dataApp/skusize.thunk";
 
 const AllSkuSize = () => {
   const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.skuSizeApp);
-  const { statusQuery, data: clases, dataFetched } = respu;
+  const { isLoading, data: clases, dataFetched } = respu;
 
   const [selectedItem, setSelectedItem] = useState(false);
   const [msgErrorModal, setMsgErrorModal] = useState({ en: "", es: "" });
   const { isOpen, closeModal, openModal } = useModal(false);
 
-  type data = {
-    skusize_id: string;
-    skusize_type: string;
-    skusize_typeValid: string;
-    skusize_name: string;
-    skusize_nameValid: string;
-  };
-  const initState: data = {
+  const initState: dataSkuSize = {
     skusize_id: "",
     skusize_type: "",
     skusize_typeValid: "",
@@ -63,12 +59,12 @@ const AllSkuSize = () => {
     return () => {
       // console.log("validacion skusize: ", dataFetched);
       if (!dataFetched) {
-        dispatch(apiSkuSize());
+        dispatch(fetchSkuSize());
       }
     };
   }, [dataFetched]);
 
-  const handleIndividualItem = (clase: data) => {
+  const handleIndividualItem = (clase: dataSkuSize) => {
     setSelectedItem(true);
     // console.log(clase);
     setValues({
@@ -162,35 +158,21 @@ const AllSkuSize = () => {
             </div>
 
             <div className="SVcontainer__center">
-              <button
-                className="SVform__field--button"
-                onClick={handleOnSave}
-                disabled={selectedItem}
-              >
-                <span>SAVE</span>
-              </button>
-              <button
-                className="SVform__field--button"
-                onClick={handleOnDelete}
-                disabled={!selectedItem}
-              >
-                <span>DELETE</span>
-              </button>
-              <button
-                className="SVform__field--button"
-                onClick={handleOnUpDate}
-                disabled={!selectedItem}
-              >
-                <span>UPDATE</span>
-              </button>
+              <ButtonGroup
+                onSave={handleOnSave}
+                onDelete={handleOnDelete}
+                onUpdate={handleOnUpDate}
+                selectedItem={selectedItem}
+              />
             </div>
+           
           </form>
         </div>
         <div className="SVcontainer__items">
-          {statusQuery ? (
+          {isLoading ? (
             <p> Loading </p>
           ) : (
-            clases.map((clase: data, index: number) => (
+            clases.map((clase: dataSkuSize, index: number) => (
               <div className="SVlist__item" key={`A${index}`}>
                 <label className="SVlist__item--field">
                   {clase.skusize_type}

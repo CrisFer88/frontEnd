@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { getAllItems, useAppDispatch, useAppSelector } from "../../../store";
+import { useAppDispatch, useAppSelector } from "../../../store";
 import "../../../styles/formStyle.css";
 import ReactDatePicker from "react-datepicker";
 import useForm from "../../../hooks/useForm";
 import { regexEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import Modal from "../ui/Modal";
+import { fetchAllItems } from "../../../thunks/dataApp/allitems.thunk";
 
 interface dataInterf {
   itemc_id: string;
@@ -45,7 +46,7 @@ export const NewStackForm = () => {
   const { isOpen, closeModal, openModal, classNameModal } = useModal(false);
   const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.productsApp);
-  const { statusQuery, data, dataFetched } = respu;
+  const { isLoading, data, dataFetched } = respu;
 
   const formValidations = {
     itemc_name: [
@@ -95,7 +96,7 @@ export const NewStackForm = () => {
   useEffect(() => {
     return () => {
       if (!dataFetched) {
-        dispatch(getAllItems());
+        dispatch(fetchAllItems());
       }
     };
   }, []);
@@ -130,7 +131,7 @@ export const NewStackForm = () => {
     }
   };
 
-  if (statusQuery) {
+  if (isLoading) {
     return (
       <>
         <p>Loading</p>

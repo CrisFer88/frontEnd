@@ -1,27 +1,26 @@
-import { apiClasse, useAppDispatch, useAppSelector } from "../../../store";
+// import { apiClasse, useAppDispatch, useAppSelector } from "../../../store";
+import { useAppDispatch, useAppSelector } from "../../../store";
 import { regexEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import addButton from "../../../assets/icon/add_button.png";
 import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
+import { dataClasses } from "../../../utils/types";
+import { fetchClasses } from "../../../thunks/dataApp/classe.thunk";
+import ButtonGroup from "../ui/ButtonGroup";
 
 const AllClases = () => {
   const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.clasesApp);
-  const { statusQuery, data: clases, dataFetched } = respu;
+  const { isLoading, data: clases, dataFetched, error } = respu;
 
   const [selectedItem, setSelectedItem] = useState(false);
   const [msgErrorModal, setMsgErrorModal] = useState({ en: "", es: "" });
   const { isOpen, closeModal, openModal } = useModal(false);
 
-  type data = {
-    itemc_id: string;
-    itemc_name: string;
-    itemc_nameValid: string;
-  };
-  const initState: data = {
+  const initState: dataClasses = {
     itemc_id: "",
     itemc_name: "",
     itemc_nameValid: "",
@@ -48,14 +47,14 @@ const AllClases = () => {
 
   useEffect(() => {
     return () => {
-      // console.log("validacion clases: ", dataFetched);
+      console.log("validacion clases: ", !dataFetched);
       if (!dataFetched) {
-        dispatch(apiClasse());
+        dispatch(fetchClasses());
       }
     };
   }, [dataFetched]);
 
-  const handleIndividualItem = (clase: data) => {
+  const handleIndividualItem = (clase: dataClasses) => {
     setSelectedItem(true);
     console.log(clase);
     setValues({
@@ -85,11 +84,11 @@ const AllClases = () => {
   };
   const handleOnDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    
+    console.log("Se va a borrar la Clase");
   };
   const handleOnUpDate = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("upd");
+    console.log("Se va a actualizar la Clase");
   };
 
   return (
@@ -97,26 +96,23 @@ const AllClases = () => {
       <Modal isOpen={isOpen} closeModal={closeModal}>
         <div className="SVParagraph__En">
           <p>En:</p>
-          <p>{ msgErrorModal.en }</p>
+          <p>{msgErrorModal.en}</p>
         </div>
         <div className="SVParagraph__Es">
           <p>Es:</p>
-          <p>{ msgErrorModal.es }</p>
+          <p>{msgErrorModal.es}</p>
         </div>
       </Modal>
 
-
-
-
       <div className="SVcontainer__center--col">
-
         <div className="SVcontainer__title">
-        <h3> PRODUCT CLASS </h3>
-          <span onClick={ handleReset } className="SVreset">
-            <img src={ refreshButton } alt="ResetForm" />
+          <h3> PRODUCT CLASS </h3>
+          <span onClick={handleReset} className="SVreset">
+            <img src={refreshButton} alt="ResetForm" />
           </span>
         </div>
 
+        <div className="SVerror__p">{!!error && <p>{error}</p>}</div>
 
         <div className="SVcontainer__form">
           <form>
@@ -132,36 +128,22 @@ const AllClases = () => {
                 />
               </div>
             </div>
+
             <div className="SVcontainer__center">
-              <button
-                className="SVform__field--button"
-                onClick={handleOnSave}
-                disabled={selectedItem}
-              >
-                <span>SAVE</span>
-              </button>
-              <button
-                className="SVform__field--button"
-                onClick={handleOnDelete}
-                disabled={!selectedItem}
-              >
-                <span>DELETE</span>
-              </button>
-              <button
-                className="SVform__field--button"
-                onClick={handleOnUpDate}
-                disabled={!selectedItem}
-              >
-                <span>UPDATE</span>
-              </button>
+              <ButtonGroup
+                onSave={handleOnSave}
+                onDelete={handleOnDelete}
+                onUpdate={handleOnUpDate}
+                selectedItem={selectedItem}
+              />
             </div>
           </form>
         </div>
         <div className="SVcontainer__items">
-          {statusQuery ? (
+          {isLoading ? (
             <p> Loading </p>
           ) : (
-            clases.map((clase: data, index: number) => (
+            clases.map((clase: dataClasses, index: number) => (
               <div className="SVlist__item" key={`A${index}`}>
                 <label className="SVlist__item--field">
                   {clase.itemc_name}

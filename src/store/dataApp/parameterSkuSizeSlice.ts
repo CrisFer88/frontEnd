@@ -1,7 +1,6 @@
-import {createSlice } from "@reduxjs/toolkit";
-import { fetchAllItems } from "../../thunks/dataApp/allitems.thunk";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchSkuSize } from "../../thunks/dataApp/skusize.thunk";
 import { initApiData } from "../../utils/types";
-
 
 const initialState: initApiData = {
   isLoading: false,
@@ -10,27 +9,25 @@ const initialState: initApiData = {
   error: undefined
 };
 
-export const productsSlice = createSlice({
-  name: "productsApp",
+export const parameterSkuSize = createSlice({
+  name: "skuSizeApp",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAllItems.pending, ( state ) => {
+    builder.addCase(fetchSkuSize.pending, ( state ) => {
       state.isLoading = true;
     })
-    builder.addCase( fetchAllItems.fulfilled, ( state, action) => {
+    builder.addCase( fetchSkuSize.fulfilled, ( state, action) => {
       state.isLoading = false;
       state.dataFetched = true;
       state.data = action.payload;
     })
-    builder.addCase ( fetchAllItems.rejected , (state, action)=> {
+    builder.addCase ( fetchSkuSize.rejected , (state, action)=> {
       state.isLoading= false;
       state.error = action.error.message;
     }) 
   }
-
 });
 
 
-export default productsSlice.reducer;
-
+export default parameterSkuSize.reducer;

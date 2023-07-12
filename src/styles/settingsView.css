@@ -5,6 +5,9 @@
 }
 
 /* ############################################################## */
+
+
+
 .SVcontainer__components {
   display: flex;
   justify-content: center;
@@ -14,12 +17,19 @@
   justify-items: center;
   margin: 10px 0px 0px 0px;
   display: grid;
-  width: 600px;
+  width: 910px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
   gap: 60px;
 }
 
+.SVerror__p{
+  color: red;
+  font-weight: bold;
+  font-size: x-small;
+}
+
 .SVcard__view {
+  
   box-shadow: 0 0 3px #f25e5e;
   border-radius: 10px;
   height: 350px;
@@ -109,7 +119,7 @@ select {
 /* ############################################################## */
 /*------------------> BUTTON  <--------------------*/
 
-.SVform__field--button {
+.SVcontainer__center button {
   border-radius: 8px;
   background-color: #426a8c;
   border: none;
@@ -123,14 +133,14 @@ select {
   margin: 5px;
 }
 
-.SVform__field--button span {
+.SVcontainer__center button span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.SVform__field--button span:after {
+.SVcontainer__center button span:after {
   content: "\00bb";
   position: absolute;
   opacity: 0;
@@ -139,18 +149,18 @@ select {
   transition: 0.5s;
 }
 
-.SVform__field--button:hover span {
+.SVcontainer__center  button:hover span {
   padding-right: 10px;
 }
 
-.SVform__field--button:hover span:after {
+.SVcontainer__center button:hover span:after {
   opacity: 1;
   right: 0;
 }
-.SVform__field--button--disabled {
+.SVcontainer__center button.disabled {
   cursor: not-allowed;
   pointer-events: none;
-  background-color: #64819b;
+  background-color: #91b1cc;
 }
 
 /* -------------------------- */

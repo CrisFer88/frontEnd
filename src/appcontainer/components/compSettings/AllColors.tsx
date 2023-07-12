@@ -1,4 +1,4 @@
-import { apiColor, useAppDispatch, useAppSelector } from "../../../store";
+import { useAppDispatch, useAppSelector } from "../../../store";
 import { regexEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import addButton from "../../../assets/icon/add_button.png";
@@ -6,22 +6,20 @@ import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
 import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
+import { dataColor } from "../../../utils/types";
+import { fetchColors } from "../../../thunks/dataApp/color.thunk";
+import ButtonGroup from "../ui/ButtonGroup";
 
 const AllColors = () => {
   const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.colorApp);
-  const { statusQuery, data: clases, dataFetched } = respu;
+  const { isLoading, data: clases, dataFetched } = respu;
 
   const [selectedItem, setSelectedItem] = useState(false);
   const [msgErrorModal, setMsgErrorModal] = useState({ en: "", es: "" });
   const { isOpen, closeModal, openModal } = useModal(false);
 
-  type data = {
-    color_id: string;
-    color_name: string;
-    color_nameValid: string;
-  };
-  const initState: data = {
+  const initState: dataColor = {
     color_id: "",
     color_name: "",
     color_nameValid: "",
@@ -50,12 +48,12 @@ const AllColors = () => {
     return () => {
       // console.log("validacion color: ", dataFetched);
       if (!dataFetched) {
-        dispatch(apiColor());
+        dispatch(fetchColors());
       }
     };
   }, [dataFetched]);
 
-  const handleIndividualItem = (clase: data) => {
+  const handleIndividualItem = (clase: dataColor) => {
     setSelectedItem(true);
     console.log(clase);
     setValues({
@@ -85,10 +83,11 @@ const AllColors = () => {
   };
   const handleOnDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    console.log("Se va aborrar Color");
   };
   const handleOnUpDate = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("upd");
+    console.log("se va a actualizar Color");
   };
 
   return (
@@ -104,20 +103,13 @@ const AllColors = () => {
         </div>
       </Modal>
 
-
-
       <div className="SVcontainer__center--col">
-
-
         <div className="SVcontainer__title">
           <h3> PRODUCT COLOR </h3>
-          <span onClick={ handleReset } className="SVreset">
-            <img src={ refreshButton } alt="Reset Form" />
+          <span onClick={handleReset} className="SVreset">
+            <img src={refreshButton} alt="Reset Form" />
           </span>
         </div>
-
-
-
 
         <div className="SVcontainer__form">
           <form>
@@ -140,35 +132,20 @@ const AllColors = () => {
               </div>
             </div>
             <div className="SVcontainer__center">
-              <button
-                className="SVform__field--button"
-                onClick={handleOnSave}
-                disabled={selectedItem}
-              >
-                <span>SAVE</span>
-              </button>
-              <button
-                className="SVform__field--button"
-                onClick={handleOnDelete}
-                disabled={!selectedItem}
-              >
-                <span>DELETE</span>
-              </button>
-              <button
-                className="SVform__field--button"
-                onClick={handleOnUpDate}
-                disabled={!selectedItem}
-              >
-                <span>UPDATE</span>
-              </button>
+              <ButtonGroup
+                onSave={handleOnSave}
+                onDelete={handleOnDelete}
+                onUpdate={handleOnUpDate}
+                selectedItem={selectedItem}
+              />
             </div>
           </form>
         </div>
         <div className="SVcontainer__items">
-          {statusQuery ? (
+          {isLoading ? (
             <p> Loading </p>
           ) : (
-            clases.map((clase: data, index: number) => (
+            clases.map((clase: dataColor, index: number) => (
               <div className="SVlist__item" key={`A${index}`}>
                 <label className="SVlist__item--field">
                   {clase.color_name}

@@ -5,8 +5,8 @@ import authSlice from "./auth/authSlice";
 import productsSlice from "./dataApp/productsSlice";
 import parameterClasesSlice from "./dataApp/parameterClasesSlice";
 import parameterColorSlice  from "./dataApp/parameterColorSlice";
-import parameterSkuSize  from "./dataApp/parameterSkuSize";
-import parameterColorAssigment from "./dataApp/parameterColorAssigment";
+import parameterSkuSize  from "./dataApp/parameterSkuSizeSlice";
+import parameterColorAssigment from "./dataApp/parameterColorAssigmentSlice";
 // ...
 
 export const store = configureStore({

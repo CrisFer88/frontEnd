@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import addButton from "../../../assets/icon/add_button.png";
+import React, { useState } from "react";
+// import addButton from "../../../assets/icon/add_button.png";
 import refreshButton from "../../../assets/icon/refresh_button.png";
 import useForm from "../../../hooks/useForm";
 import { useAppSelector } from "../../../store";
-const AllParameters = () => {
+import ButtonGroup from "../ui/ButtonGroup";
+const AllSkusizeAssignment = () => {
   type SkuSizeData = {
     skusize_id: string;
     skusize_type: string;
@@ -11,10 +12,11 @@ const AllParameters = () => {
   };
 
   const respu = useAppSelector((state) => state.clasesApp);
-  const { statusQuery: stClass, data: clases } = respu;
+  const { isLoading: stClass, data: clases } = respu;
 
   const respu2 = useAppSelector((state) => state.skuSizeApp);
-  const { statusQuery: stSkuSize, data: SkuSize } = respu2;
+  const { isLoading
+    : stSkuSize, data: SkuSize } = respu2;
 
   const [selectedItem, setSelectedItem] = useState(false);
 
@@ -91,7 +93,7 @@ const AllParameters = () => {
   return (
     <div className="SVcontainer__center--col">
       <div className="SVcontainer__title">
-        <h3> ASSIGNATION SIZE </h3>
+        <h3> ASSIGNATION SKU-SIZE </h3>
         <span onClick={handleReset} className="SVreset">
           <img src={refreshButton} alt="Reset Form" />
         </span>
@@ -139,31 +141,16 @@ const AllParameters = () => {
           )}
         </div>
         <div className="SVcontainer__center">
-          <button
-            className="SVform__field--button"
-            onClick={handleOnSave}
-            disabled={selectedItem}
-          >
-            <span>SAVE</span>
-          </button>
-          <button
-            className="SVform__field--button"
-            onClick={handleOnDelete}
-            disabled={!selectedItem}
-          >
-            <span>DELETE</span>
-          </button>
-          <button
-            className="SVform__field--button"
-            onClick={handleOnUpDate}
-            disabled={!selectedItem}
-          >
-            <span>UPDATE</span>
-          </button>
-        </div>
+              <ButtonGroup
+                onSave={handleOnSave}
+                // onDelete={handleOnDelete}
+                // onUpdate={handleOnUpDate}
+                selectedItem={selectedItem}
+              />
+            </div>
       </form>
     </div>
   );
 };
 
-export default AllParameters;
+export default AllSkusizeAssignment;

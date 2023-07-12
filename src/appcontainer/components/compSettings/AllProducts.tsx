@@ -1,21 +1,22 @@
 import { useEffect } from "react";
 import "../../../styles/tableStyleOne.css";
-import { getAllItems, useAppDispatch, useAppSelector} from "../../../store";
+import {  useAppDispatch, useAppSelector} from "../../../store";
+import { fetchAllItems } from "../../../thunks/dataApp/allitems.thunk";
 const AllProducts = () => {
   const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.productsApp);
-  const { statusQuery, data: products, dataFetched } = respu;
+  const { isLoading, data: products, dataFetched } = respu;
 
   useEffect(() => {
     return () => {
       console.log('validacion Products: ',dataFetched);
       if (!dataFetched) {
-      dispatch(getAllItems());
+      dispatch(fetchAllItems());
       }
     };
   }, [dataFetched ]);
 
-  if (statusQuery) {
+  if (isLoading) {
     return (
       <>
         <p>Loading</p>
