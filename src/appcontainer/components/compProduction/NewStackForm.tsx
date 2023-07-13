@@ -7,32 +7,9 @@ import { regexEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import Modal from "../ui/Modal";
 import { fetchAllItems } from "../../../thunks/dataApp/allitems.thunk";
+import { IS_AllProducts, IS_dataSkuSize, IS_newStack, type_ParaItemType} from "../../../utils/types";
 
-interface dataInterf {
-  itemc_id: string;
-  itemc_name: string;
-  ParaItemTypes: {
-    itemt_name: string;
-    itemt_shortname: string;
-    ParaSkuSizes: {
-      skusize_name: string;
-    }[];
-  }[];
-  ColorItems: {
-    color_name: string;
-  }[];
-}
-
-interface initFS {
-  itemc_name: string;
-  itemc_id: string;
-  itemt_name: string;
-  itemt_shortname: string;
-  skusize_name: string;
-  color_name: string;
-}
-
-const initFormState: initFS = {
+const initFormState: IS_newStack= {
   itemc_id: "",
   itemc_name: "",
   itemt_name: "",
@@ -43,7 +20,7 @@ const initFormState: initFS = {
 
 export const NewStackForm = () => {
   const [startDate, setStartDate] = useState(new Date());
-  const { isOpen, closeModal, openModal, classNameModal } = useModal(false);
+  const { isOpen, closeModal, openModal } = useModal(false);
   const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.productsApp);
   const { isLoading, data, dataFetched } = respu;
@@ -101,14 +78,15 @@ export const NewStackForm = () => {
     };
   }, []);
 
-  const optionComponents = data.filter((elem: dataInterf) => {
+  const optionComponents = data.filter((elem: IS_AllProducts) => {
     if (elem.itemc_id === values.itemc_id) {
       values.itemc_name = elem.itemc_name;
-      return elem;
+      return true;
     }
+    return false;
   });
 
-  const optionSkusize = optionComponents.map((elem: dataInterf, index) =>
+  const optionSkusize = optionComponents.map((elem: IS_AllProducts) =>
     elem.ParaItemTypes.filter((ParaType) => {
       if (ParaType.itemt_name === values.itemt_name) {
         values.itemt_shortname = ParaType.itemt_shortname;
@@ -146,10 +124,9 @@ export const NewStackForm = () => {
             <p className="en">These are the present error in the form.</p>
           </div>
           <div className="modal__bodyA">
-
-              {Object.values(errors).map(
-                (e, index) => !!e && <p key={index}>{e}</p>
-              )}
+            {Object.values(errors).map(
+              (e, index) => !!e && <p key={index}>{e}</p>
+            )}
           </div>
         </Modal>
         {/* Tititulo del formulario */}
@@ -188,11 +165,12 @@ export const NewStackForm = () => {
                   onChange={onNewOrder}
                 >
                   <option key="itemc_1"></option>
-                  {data.map((elem: dataInterf, index) => (
-                    <option value={elem.itemc_id} key={index}>
-                      {elem.itemc_name}
-                    </option>
-                  ))}
+                  {Array.isArray(data) &&
+                    data.map((elem: IS_AllProducts, index) => (
+                      <option value={elem.itemc_id} key={index}>
+                        {elem.itemc_name}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
@@ -207,7 +185,7 @@ export const NewStackForm = () => {
                   onChange={onNewOrder}
                 >
                   <option key="itemt_1"></option>
-                  {optionComponents.map((elem: dataInterf, index) =>
+                  {optionComponents.map((elem: IS_AllProducts) =>
                     elem.ParaItemTypes.map((ParaType, index) => (
                       <option key={index}>{ParaType.itemt_name}</option>
                     ))
@@ -234,8 +212,8 @@ export const NewStackForm = () => {
               >
                 <option key="itemt_1"></option>
                 {optionSkusize.length > 0 &&
-                  optionSkusize[0].map((ele, index) =>
-                    ele.ParaSkuSizes.map((ss, index) => (
+                  optionSkusize[0].map((ele: type_ParaItemType) =>
+                    ele.ParaSkuSizes.map((ss: IS_dataSkuSize  , index: number) => (
                       <option key={index}>{ss.skusize_name}</option>
                     ))
                   )}
@@ -251,7 +229,7 @@ export const NewStackForm = () => {
                 onChange={onNewOrder}
               >
                 <option key="itemt_1"></option>
-                {optionComponents.map((elem: dataInterf, index) =>
+                {optionComponents.map((elem: IS_AllProducts, index: number) =>
                   elem.ColorItems.map((ParaType, index) => (
                     <option key={index}>{ParaType.color_name}</option>
                   ))

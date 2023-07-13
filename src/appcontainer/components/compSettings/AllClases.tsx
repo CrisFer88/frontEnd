@@ -7,8 +7,8 @@ import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
 import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
-import { dataClasses } from "../../../utils/types";
-import { fetchClasses } from "../../../thunks/dataApp/classe.thunk";
+import { IS_dataClasses } from "../../../utils/types";
+import { delItemClasses, fetchClasses, newItemClasses, updateItemClasses } from "../../../thunks/dataApp/classe.thunk";
 import ButtonGroup from "../ui/ButtonGroup";
 
 const AllClases = () => {
@@ -20,7 +20,7 @@ const AllClases = () => {
   const [msgErrorModal, setMsgErrorModal] = useState({ en: "", es: "" });
   const { isOpen, closeModal, openModal } = useModal(false);
 
-  const initState: dataClasses = {
+  const initState: IS_dataClasses = {
     itemc_id: "",
     itemc_name: "",
     itemc_nameValid: "",
@@ -54,7 +54,7 @@ const AllClases = () => {
     };
   }, [dataFetched]);
 
-  const handleIndividualItem = (clase: dataClasses) => {
+  const handleIndividualItem = (clase: IS_dataClasses) => {
     setSelectedItem(true);
     console.log(clase);
     setValues({
@@ -73,7 +73,8 @@ const AllClases = () => {
   const handleOnSave = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isFormValid) {
-      console.log("Todo good", values.itemc_name);
+      dispatch(newItemClasses(values.itemc_name.toUpperCase())).then((dataFetch) => {
+      });
     } else {
       setMsgErrorModal({
         en: "NAME is required in the PRODUCT CLASS section.",
@@ -82,13 +83,18 @@ const AllClases = () => {
       openModal();
     }
   };
+
+
+
   const handleOnDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    dispatch( delItemClasses(values.itemc_id) );
     console.log("Se va a borrar la Clase");
   };
   const handleOnUpDate = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("Se va a actualizar la Clase");
+    console.log("Se va a actualizar la Clase", values);
+    dispatch( updateItemClasses({ itemc_id: values.itemc_id , itemc_name: values.itemc_name.toUpperCase() } as IS_dataClasses ) );
   };
 
   return (
@@ -143,7 +149,7 @@ const AllClases = () => {
           {isLoading ? (
             <p> Loading </p>
           ) : (
-            clases.map((clase: dataClasses, index: number) => (
+            clases.map((clase: IS_dataClasses, index: number) => (
               <div className="SVlist__item" key={`A${index}`}>
                 <label className="SVlist__item--field">
                   {clase.itemc_name}

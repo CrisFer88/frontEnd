@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchColors } from "../../thunks/dataApp/color.thunk";
-import { initApiData } from "../../utils/types";
+import { IS_typeColor } from "../../utils/types";
 
-const initialState: initApiData = {
+
+
+
+const initialState: IS_typeColor = {
   isLoading: false,
   dataFetched: false,
   data: [],

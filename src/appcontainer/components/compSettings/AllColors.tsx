@@ -6,7 +6,7 @@ import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
 import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
-import { dataColor } from "../../../utils/types";
+import { IS_dataColor } from "../../../utils/types";
 import { fetchColors } from "../../../thunks/dataApp/color.thunk";
 import ButtonGroup from "../ui/ButtonGroup";
 
@@ -19,7 +19,8 @@ const AllColors = () => {
   const [msgErrorModal, setMsgErrorModal] = useState({ en: "", es: "" });
   const { isOpen, closeModal, openModal } = useModal(false);
 
-  const initState: dataColor = {
+
+  const initState: IS_dataColor = {
     color_id: "",
     color_name: "",
     color_nameValid: "",
@@ -53,7 +54,7 @@ const AllColors = () => {
     };
   }, [dataFetched]);
 
-  const handleIndividualItem = (clase: dataColor) => {
+  const handleIndividualItem = (clase: IS_dataColor) => {
     setSelectedItem(true);
     console.log(clase);
     setValues({
@@ -145,7 +146,7 @@ const AllColors = () => {
           {isLoading ? (
             <p> Loading </p>
           ) : (
-            clases.map((clase: dataColor, index: number) => (
+            clases.map((clase: IS_dataColor, index: number) => (
               <div className="SVlist__item" key={`A${index}`}>
                 <label className="SVlist__item--field">
                   {clase.color_name}

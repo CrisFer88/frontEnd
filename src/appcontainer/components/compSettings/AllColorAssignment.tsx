@@ -1,7 +1,4 @@
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../store";
+import { useAppDispatch, useAppSelector } from "../../../store";
 import { regexEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import addButton from "../../../assets/icon/add_button.png";
@@ -11,6 +8,15 @@ import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
 import ButtonGroup from "../ui/ButtonGroup";
 import { fetchColorAssignment } from "../../../thunks/dataApp/colorassignment.thunk";
+/* 
+- This type describes the received data: IS_dataColorAssignment
+- This type describes the state of each select and 
+  allows me make validations: IS_Form_dataColorAssignment
+*/
+import {
+  IS_Form_dataColorAssignment,
+  IS_dataColorAssignment,
+} from "../../../utils/types";
 
 const AllColorAssignment = () => {
   const dispatch = useAppDispatch();
@@ -30,43 +36,8 @@ const AllColorAssignment = () => {
   //hook useModal set up
   const { isOpen, closeModal, openModal } = useModal(false);
 
-  //This type describes the received data
-  type data = {
-    itemk_id: string;
-    ParaItemClass: {
-      itemc_id: string;
-      itemc_name: string;
-    };
-    ColorItem: {
-      color_id: string;
-      color_name: string;
-    };
-  };
-  // This is the initial state of the data recived, also it will be fill up with all data selected from the list
-  const initState: data = {
-    itemk_id: "",
-    ParaItemClass: {
-      itemc_id: "",
-      itemc_name: "",
-    },
-    ColorItem: {
-      color_id: "",
-      color_name: "",
-    },
-  };
-
-  //This type describes the state of each select and allows me make validations.
-  type requ = {
-    itemk_id: string;
-    itemc_id: string;
-    itemc_name: string;
-    itemc_idValid: string;
-    color_id: string;
-    color_name: string;
-    color_idValid: string;
-  };
   //This is the initial state used in useForm hook to validate all fields in the form
-  const initRequ: requ = {
+  const initRequ: IS_Form_dataColorAssignment = {
     itemk_id: "",
     itemc_id: "",
     itemc_name: "",
@@ -117,7 +88,7 @@ const AllColorAssignment = () => {
 
   //Set up selected item from the list to makes updates or delete
 
-  const handleIndividualItem = (clase: data) => {
+  const handleIndividualItem = (clase: IS_dataColorAssignment) => {
     setSelectedItem(true);
     setValues({
       ...values,
@@ -173,7 +144,7 @@ const AllColorAssignment = () => {
     switch (name) {
       case "color_name":
         const inf: any = colors.find(
-          (ele: data["ColorItem"]) => ele.color_name === value
+          (ele: IS_dataColorAssignment["ColorItem"]) => ele.color_name === value
         );
         const { color_id, color_name } = inf;
         setValues({
@@ -185,7 +156,8 @@ const AllColorAssignment = () => {
         break;
       case "itemc_name":
         const inf2: any = classes.find(
-          (ele: data["ParaItemClass"]) => ele.itemc_name === value
+          (ele: IS_dataColorAssignment["ParaItemClass"]) =>
+            ele.itemc_name === value
         );
         const { itemc_id, itemc_name } = inf2;
         setValues({
@@ -216,8 +188,6 @@ const AllColorAssignment = () => {
         <p> {!!errors.skusize_typeValid && errors.skusize_typeValid}</p> */}
       </Modal>
       <div className="SVcontainer__center--col">
-
-        
         <div className="SVcontainer__title">
           <h3> COLOR ASSIGMENT </h3>
           <span onClick={handleReset} className="SVreset">
@@ -238,7 +208,10 @@ const AllColorAssignment = () => {
                 >
                   <option></option>
                   {classes.map(
-                    (clase: data["ParaItemClass"], index: number) => (
+                    (
+                      clase: IS_dataColorAssignment["ParaItemClass"],
+                      index: number
+                    ) => (
                       <option key={index}> {clase.itemc_name} </option>
                     )
                   )}
@@ -255,9 +228,14 @@ const AllColorAssignment = () => {
                   value={values.color_name}
                 >
                   <option></option>
-                  {colors.map((clase: data["ColorItem"], index: number) => (
-                    <option key={index}> {clase.color_name} </option>
-                  ))}
+                  {colors.map(
+                    (
+                      clase: IS_dataColorAssignment["ColorItem"],
+                      index: number
+                    ) => (
+                      <option key={index}> {clase.color_name} </option>
+                    )
+                  )}
                 </select>
               </div>
             </div>
@@ -272,10 +250,10 @@ const AllColorAssignment = () => {
           </form>
         </div>
         <div className="SVcontainer__items">
-          {isLoading? (
+          {isLoading ? (
             <p> Loading </p>
           ) : (
-            colorAssig.map((clase: data, index: number) => (
+            colorAssig.map((clase: IS_dataColorAssignment, index: number) => (
               <div className="SVlist__item" key={`A${index}`}>
                 <label className="SVlist__item--field">
                   {clase.ParaItemClass.itemc_name}

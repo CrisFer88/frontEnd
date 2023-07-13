@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { initApiData } from "../../utils/types";
+import { IS_typeColorAssignment} from "../../utils/types";
 import { fetchColorAssignment } from "../../thunks/dataApp/colorassignment.thunk";
 
 
 
-const initialState: initApiData = {
+const initialState: IS_typeColorAssignment = {
   isLoading: false,
   data: [],
   dataFetched: false,

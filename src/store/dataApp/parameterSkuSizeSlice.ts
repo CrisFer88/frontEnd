@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchSkuSize } from "../../thunks/dataApp/skusize.thunk";
-import { initApiData } from "../../utils/types";
+import { IS_typeSkuSize} from "../../utils/types";
 
-const initialState: initApiData = {
+
+const initialState: IS_typeSkuSize = {
   isLoading: false,
   data: [],
   dataFetched: false,

@@ -6,7 +6,7 @@ import refreshButton from "../../../assets/icon/refresh_button.png";
 import Modal from "../ui/Modal";
 import React, { useEffect, useState } from "react";
 import useForm from "../../../hooks/useForm";
-import { dataSkuSize } from "../../../utils/types";
+import { IS_dataSkuSize } from "../../../utils/types";
 import ButtonGroup from "../ui/ButtonGroup";
 import { fetchSkuSize } from "../../../thunks/dataApp/skusize.thunk";
 
@@ -19,7 +19,7 @@ const AllSkuSize = () => {
   const [msgErrorModal, setMsgErrorModal] = useState({ en: "", es: "" });
   const { isOpen, closeModal, openModal } = useModal(false);
 
-  const initState: dataSkuSize = {
+  const initState: IS_dataSkuSize = {
     skusize_id: "",
     skusize_type: "",
     skusize_typeValid: "",
@@ -64,7 +64,7 @@ const AllSkuSize = () => {
     };
   }, [dataFetched]);
 
-  const handleIndividualItem = (clase: dataSkuSize) => {
+  const handleIndividualItem = (clase: IS_dataSkuSize) => {
     setSelectedItem(true);
     // console.log(clase);
     setValues({
@@ -172,7 +172,7 @@ const AllSkuSize = () => {
           {isLoading ? (
             <p> Loading </p>
           ) : (
-            clases.map((clase: dataSkuSize, index: number) => (
+            clases.map((clase: IS_dataSkuSize, index: number) => (
               <div className="SVlist__item" key={`A${index}`}>
                 <label className="SVlist__item--field">
                   {clase.skusize_type}

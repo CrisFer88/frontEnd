@@ -4,12 +4,8 @@ import refreshButton from "../../../assets/icon/refresh_button.png";
 import useForm from "../../../hooks/useForm";
 import { useAppSelector } from "../../../store";
 import ButtonGroup from "../ui/ButtonGroup";
+import { IS_AllSkuSizeAssignment, IS_dataClasses, IS_dataSkuSize } from "../../../utils/types";
 const AllSkusizeAssignment = () => {
-  type SkuSizeData = {
-    skusize_id: string;
-    skusize_type: string;
-    skusize_name: string;
-  };
 
   const respu = useAppSelector((state) => state.clasesApp);
   const { isLoading: stClass, data: clases } = respu;
@@ -22,13 +18,8 @@ const AllSkusizeAssignment = () => {
 
   const [arrSkuSize, setarrSkuSize] = useState<{ skusize_id: string; }[]>([]);
 
-  type data = {
-    itemc_id: string;
-    itemc_name: string;
-    itemc_nameValid: string;
-    skusize: [];
-  };
-  const initState: data = {
+  
+  const initState: IS_AllSkuSizeAssignment  = {
     itemc_id: "",
     itemc_name: "",
     itemc_nameValid: "",
@@ -105,7 +96,7 @@ const AllSkusizeAssignment = () => {
           {stClass ? (
             <p> Loading classes </p>
           ) : (
-            clases.map((clase: data, index: number) => (
+            clases.map((clase: IS_dataClasses, index: number) => (
               <div className="SVoptionbox" key={`1a${clase.itemc_id}`}>
                 <input
                   type="radio"
@@ -126,7 +117,7 @@ const AllSkusizeAssignment = () => {
           {stSkuSize ? (
             <p> Loading </p>
           ) : (
-            SkuSize.map((skusize: SkuSizeData, index: number) => (
+            SkuSize.map((skusize: IS_dataSkuSize, index: number) => (
               <div className="SVoptionbox" key={`2a${index}`}>
                 <input
                   type="checkbox"

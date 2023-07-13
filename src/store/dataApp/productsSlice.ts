@@ -1,9 +1,11 @@
 import {createSlice } from "@reduxjs/toolkit";
 import { fetchAllItems } from "../../thunks/dataApp/allitems.thunk";
-import { initApiData } from "../../utils/types";
+import { IS_typeAllProducts  } from "../../utils/types";
 
 
-const initialState: initApiData = {
+
+
+const initialState: IS_typeAllProducts = {
   isLoading: false,
   data: [],
   dataFetched: false,
