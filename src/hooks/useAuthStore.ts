@@ -30,7 +30,7 @@ export const useAuthStore = () => {
         user_email,
         user_password,
       });
-      // console.log(data);
+      // console.log("CRIS ESTA ES LA DATA---------------->",data);
       //TODO: Cambiar aqui los valores que retorna el Backend, pidiendo el objeto con las vistas que seran bloqueadas
       localStorage.setItem("token", data.token);
       localStorage.setItem("userSt", "OK");
@@ -41,6 +41,7 @@ export const useAuthStore = () => {
           sessionId: data.sessionId,
           uId: data.uid,
           uStatus: data.ustatus,
+          Assignation: data.Assignation
         })
       );
     } catch (e: any) {

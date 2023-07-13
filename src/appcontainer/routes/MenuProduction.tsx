@@ -11,12 +11,12 @@ export const MenuProduction = () => {
             <img src={satackIcon} alt="Machine" className="menu__logo2--img" />
           </section>
 
-          <NavLink className="menu__link" to="stack">
-            Stack
+          <NavLink className="menu__link" to="newstack">
+            New Stack
           </NavLink>
 
-          <NavLink className="menu__link" to="order">
-            Order
+          <NavLink className="menu__link" to="scanstack">
+            Scan Stack
           </NavLink>
 
           <NavLink className="menu__link" to="stack_history">
