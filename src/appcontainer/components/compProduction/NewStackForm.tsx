@@ -3,19 +3,26 @@ import { useAppDispatch, useAppSelector } from "../../../store";
 import "../../../styles/formStyle.css";
 import ReactDatePicker from "react-datepicker";
 import useForm from "../../../hooks/useForm";
-import { regexEmpty } from "../../../utils/regexVar";
+import { regexEmpty, regexZeroEmpty } from "../../../utils/regexVar";
 import { useModal } from "../../../hooks/useModal";
 import Modal from "../ui/Modal";
 import { fetchAllItems } from "../../../thunks/dataApp/allitems.thunk";
-import { IS_AllProducts, IS_dataSkuSize, IS_newStack, type_ParaItemType} from "../../../utils/types";
+import {
+  IS_AllProducts,
+  IS_dataSkuSize,
+  IS_newStack,
+  localStorageMachine,
+  type_ParaItemType,
+} from "../../../utils/types";
 
-const initFormState: IS_newStack= {
+const initFormState: IS_newStack = {
   itemc_id: "",
   itemc_name: "",
   itemt_name: "",
   itemt_shortname: "",
   skusize_name: "",
   color_name: "",
+  stack_qty: 0,
 };
 
 export const NewStackForm = () => {
@@ -58,6 +65,14 @@ export const NewStackForm = () => {
       "Color is required.",
       "require",
     ],
+    stack_qty: [
+      (value: string) => {
+        const regex = regexZeroEmpty;
+        return regex.test(value);
+      },
+      "Quantity is required.",
+      "require",
+    ],
   };
 
   const {
@@ -78,6 +93,11 @@ export const NewStackForm = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setStartDate(new Date());
+  }, [values])
+  
+
   const optionComponents = data.filter((elem: IS_AllProducts) => {
     if (elem.itemc_id === values.itemc_id) {
       values.itemc_name = elem.itemc_name;
@@ -97,15 +117,31 @@ export const NewStackForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = {
-      ...values,
-    };
+    
     console.log(isFormValid, errors);
 
     if (!isFormValid) {
       openModal();
     } else {
-      console.log(data);
+      const machine: localStorageMachine = JSON.parse(localStorage.getItem("Machine") || "");
+      const dataSave = {
+        machine,
+        data: {
+          assig_id: machine.assignment,
+          order_id: 43,
+          stackp_class: values.itemc_name,
+          stackp_component: values.itemt_name,
+          stackp_shortname: values.itemt_shortname,
+          stackp_size: values.skusize_name,
+          stackp_sku: values.itemt_shortname + values.skusize_name,
+          stackp_color: values.color_name,
+          stackp_qty: values.stack_qty,
+          stackp_status: "START",
+          stackp_date: startDate.toLocaleString(),
+          stackp_combine: false,
+        },
+      };
+      console.log(dataSave);
     }
   };
 
@@ -145,12 +181,15 @@ export const NewStackForm = () => {
                 <ReactDatePicker
                   selected={startDate}
                   onChange={(date: Date) => setStartDate(date)}
+                  showTimeSelect
+                  timeIntervals={15} // Puedes ajustar los intervalos de tiempo según tus necesidades
+                  timeCaption="Hora"
+                  dateFormat="dd/MM/yyyy HH:mm" // Puedes cambiar el formato de fecha y hora según tus necesidades
                   name="singUpDate"
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
-                  placeholderText="Birthday"
                 />
               </div>
             </div>
@@ -213,9 +252,11 @@ export const NewStackForm = () => {
                 <option key="itemt_1"></option>
                 {optionSkusize.length > 0 &&
                   optionSkusize[0].map((ele: type_ParaItemType) =>
-                    ele.ParaSkuSizes.map((ss: IS_dataSkuSize  , index: number) => (
-                      <option key={index}>{ss.skusize_name}</option>
-                    ))
+                    ele.ParaSkuSizes.map(
+                      (ss: IS_dataSkuSize, index: number) => (
+                        <option key={index}>{ss.skusize_name}</option>
+                      )
+                    )
                   )}
               </select>
             </div>
@@ -235,6 +276,16 @@ export const NewStackForm = () => {
                   ))
                 )}
               </select>
+            </div>
+
+            <div className="col center">
+              <label className="label__title">QUANTITY:</label>
+              <input
+                name="stack_qty"
+                className="select__field"
+                value={values.stack_qty}
+                onChange={onNewOrderInput}
+              ></input>
             </div>
 
             {/* Contenedor de la botonera */}

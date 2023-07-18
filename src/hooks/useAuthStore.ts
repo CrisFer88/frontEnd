@@ -32,6 +32,8 @@ export const useAuthStore = () => {
       });
       // console.log("CRIS ESTA ES LA DATA---------------->",data);
       //TODO: Cambiar aqui los valores que retorna el Backend, pidiendo el objeto con las vistas que seran bloqueadas
+      const machine = { assignment: data.Assignation.assig_id, machine: data.Assignation.Machinery.mach_name, processM: data.Assignation.Machinery.mach_process}
+      localStorage.setItem("Machine", JSON.stringify(machine));
       localStorage.setItem("token", data.token);
       localStorage.setItem("userSt", "OK");
       localStorage.setItem("token-init-date", new Date().getTime().toString());

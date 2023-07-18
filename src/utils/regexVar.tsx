@@ -5,6 +5,7 @@ import React from "react";
   export const regexBasicCel = /^\d{8,11}$/;
   export const regexNum = /^[0-9]*$/;
   export const regexEmpty = /^.+$/;
+  export const regexZeroEmpty = /^(?=.*[1-9]).+$/;
   // export const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   export const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
    //Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:

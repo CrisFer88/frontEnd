@@ -9,6 +9,7 @@ import {
   StackPage,
 } from "../index";
 import { NewParamaterPage } from "../pages/NewParamaterPage";
+import { NewOrder } from "../components/compProduction/NewOrder";
 
 // import { NewBladeForm, NewMachine, NewStack, StorageBlade } from "../components";
 // import { MachineryManage, BladesManage, Inventory, MondayList, ProductionManage  } from "../pages";
@@ -23,6 +24,7 @@ export const NavRouter = () => {
             path="production/manufacturing/*"
             element={<ProductionManage />}
           >
+            <Route path="neworder" element={<NewOrder/>} />
             <Route path="newstack" element={<StackPage/>} />
             <Route path="scanstack" element={<NewStack/>} />
             {/* <Route path="stack_history" element={</>} /> */}

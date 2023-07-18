@@ -65,7 +65,9 @@ export type IS_newStack = {
   itemt_shortname: string;
   skusize_name: string;
   color_name: string;
+  stack_qty: number
 };
+
 //------------------>  INITIAL STATE REDUX STORE
 
 export type IS_typeAllProducts = {
@@ -115,7 +117,11 @@ export type ButtonGroupProps = {
 
 
 
-
+export type localStorageMachine = {
+  assignment: number;
+  machine: string;
+  processM: string;
+}
 
 
 

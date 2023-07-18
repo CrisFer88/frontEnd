@@ -1,0 +1,18 @@
+.container__page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0px 20px 0px;
+  }
+.container__page--dropdowns{
+    justify-items: center;
+  margin: 10px 0px 0px 0px;
+  display: grid;
+  width: 700px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  gap: 60px;
+}
+.container__page--info{
+    margin: 20px 0px 10px 0px;
+}
