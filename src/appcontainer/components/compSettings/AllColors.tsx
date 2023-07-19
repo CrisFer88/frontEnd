@@ -132,7 +132,7 @@ const AllColors = () => {
                 /> */}
               </div>
             </div>
-            <div className="SVcontainer__center">
+            <div className="container__buttongroup sizeone">
               <ButtonGroup
                 onSave={handleOnSave}
                 onDelete={handleOnDelete}

@@ -3,8 +3,26 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 40px 0px 20px 0px;
+    margin: 10px 0px 20px 0px;
   }
+.container__table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    border: 1px solid black;
+    border-radius: 20px;
+    overflow-x: hidden;
+    padding: 10px;
+  }
+
+  .container__table--title{
+    font-size: larger;
+    font-weight: bold;
+    padding: 10px 0px 20px 0px;
+  }
+
 .container__page--dropdowns{
     justify-items: center;
   margin: 10px 0px 0px 0px;
@@ -15,4 +33,14 @@
 }
 .container__page--info{
     margin: 20px 0px 10px 0px;
+}
+
+.img__add{
+  height: 24px;
+  width: 24px;
+}
+.centered-data {
+  text-align: center;
+  padding: 2px 5px 0px 5px ;
+  border-bottom: dotted 1px ;
 }

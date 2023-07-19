@@ -1,62 +1,135 @@
 import React, { useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
-import { localStorageMachine } from "../../../utils/types";
+import { IS_allOrdersByDate, localStorageMachine } from "../../../utils/types";
 import useForm from "../../../hooks/useForm";
-import { regexEmpty, regexZeroEmpty } from "../../../utils/regexVar";
-import ButtonGroup from "../ui/ButtonGroup";
+import { regexEmpty, regexNum, regexZeroEmpty } from "../../../utils/regexVar";
 import Modal from "../ui/Modal";
 import { useModal } from "../../../hooks/useModal";
+import { useAppDispatch, useAppSelector } from "../../../store";
+import {
+  fetchAllOrdersByDate,
+  newOrder,
+} from "../../../thunks/production/allordersbydate.thunk";
+import { formatDateTime } from "../../../utils/funtionsApp";
+import addButton from "../../../assets/icon/add_button.png";
+import "../../../styles/page.css";
+import ButtonGroup from "../ui/ButtonGroup";
 
 export const NewOrder = () => {
+  const dispatch = useAppDispatch();
   const [startDate, setStartDate] = useState(new Date());
+  const [selectedItem, setSelectedItem] = useState(false);
   const { isOpen, closeModal, openModal } = useModal(false);
-  const machine: localStorageMachine = JSON.parse(
-    localStorage.getItem("Machine") || ""
-  );
+  const machine: localStorageMachine = JSON.parse(localStorage.getItem("Machine") || "");
+  const respu = useAppSelector((state) => state.allOrders);
+  const { isLoading, data: allOrdersR, dataFetched, error } = respu;
+  // En el componente, utiliza el estado para almacenar los datos en orden inverso
+
+  
+  const iniOrder: IS_allOrdersByDate= {
+    order_id: 0,
+    assig_id: 0,
+    order_qty: 0,
+    order_date: "",
+    order_name: "",
+  };
+  const [reversedData, setReversedData] = useState(allOrdersR.slice().reverse());
+  
+
+  console.log("Las Ordenes", allOrdersR);
+
+  interface dr {
+    assig_id: number;
+    order_date: string;
+  }
+
+  const data: dr = {
+    assig_id: machine.assignment,
+    order_date: startDate.toString(),
+  };
+ 
+  useEffect(() => {
+    dispatch(fetchAllOrdersByDate(data));
+  }, [dataFetched]);
+  
+
+
+  console.log(reversedData);
 
   const formValidations = {
+    order_name: [
+      (value: string) => {
+        const regex = regexEmpty;
+        return regex.test(value);
+      },
+      "Reference name is required.",
+      "require",
+    ],
     order_qty: [
       (value: string) => {
         const regex = regexZeroEmpty;
-        return regex.test(value);
+        const regex2 = regexNum;
+        return regex.test(value) && regex2.test(value);
       },
-      "Quantity is required.",
+      "Quantity is required and only numbers.",
       "require",
     ],
   };
 
   const {
     values,
+    setValues,
     errors,
-    handleChangeSelect: onNewOrder,
     handleChangeInput: onNewOrderInput,
     isFormValid,
     onResetForm,
   } = useForm(
     {
-      order_qty: "",
+      order_qty: 0,
+      order_name: "",
     },
     formValidations
   );
 
-  const handleOnSave = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSave = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     if (!isFormValid) {
       openModal();
     } else {
       const dataSend = {
         assig_id: machine.assignment,
         order_qty: values.order_qty,
-        order_date: startDate.toLocaleString()
+        order_date: startDate.toString(),
+        // order_date: startDate.toLocaleString('en-US', { timeZone: 'America/New_York' }),
+        order_name: values.order_name,
       };
 
-      console.log(dataSend);
+      dispatch(newOrder(dataSend));
     }
   };
 
   useEffect(() => {
     setStartDate(new Date());
   }, [values]);
+
+  const handleIndividualItem = (elem: IS_allOrdersByDate) => {
+    setSelectedItem(true);
+    console.log(elem);
+    setValues({
+      ...values,
+      order_qty: elem.order_qty,
+      order_name: elem.order_name,
+    });
+  };
+  const handleOnDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log("Se va aborrar Color");
+  };
+  const handleOnUpDate = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log("se va a actualizar Color");
+  };
 
   return (
     <div className="container__form">
@@ -74,7 +147,7 @@ export const NewOrder = () => {
       <div className="container__form--body">
         {/* Inicio del formulario */}
         <form
-          onSubmit={handleOnSave}
+          // onSubmit={handleOnSave}
           className="form__options"
           autoComplete="none"
         >
@@ -99,6 +172,15 @@ export const NewOrder = () => {
             <p>{machine.machine}</p>
           </div>
           <div className="col center">
+            <label className="label__title">REFERENCE NAME:</label>
+            <input
+              name="order_name"
+              className="select__field"
+              value={values.order_name}
+              onChange={onNewOrderInput}
+            ></input>
+          </div>
+          <div className="col center">
             <label className="label__title">QUANTITY:</label>
             <input
               name="order_qty"
@@ -107,15 +189,53 @@ export const NewOrder = () => {
               onChange={onNewOrderInput}
             ></input>
           </div>
-          <div className="container__form--title ">
-            <button className="button__form">
-              <span>SAVE</span>
-            </button>
-            <button className="button__form" onClick={onResetForm}>
-              <span>RESET</span>
-            </button>
+          <div className="container__buttongroup sizeone">
+            <ButtonGroup
+              onSave={handleOnSave}
+              onDelete={handleOnDelete}
+              onUpdate={handleOnUpDate}
+              onReset={onResetForm}
+              selectedItem={selectedItem}
+            />
           </div>
         </form>
+      </div>
+      <div className="container__page">
+        <div className="container__table">
+          <div className="container__table--title">
+            <p>TODAY'S ORDERS</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>QUANTITY</th>
+                <th>DATE</th>
+                <th>NAME</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {reversedData.map((elem, index: number) => (
+                <tr key={`A${index}`}>
+                  <td className="centered-data"> {elem.order_qty} </td>
+                  <td className="centered-data">
+                    {" "}
+                    {formatDateTime(elem.order_date)}
+                  </td>
+                  <td className="centered-data"> {elem.order_name} </td>
+                  <td className="centered-data">
+                    <img
+                      className="img__add"
+                      src={addButton}
+                      alt={`Name:${elem.order_name}`}
+                      onClick={() => handleIndividualItem(elem)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

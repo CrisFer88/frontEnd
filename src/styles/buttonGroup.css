@@ -1,0 +1,61 @@
+/*------------------> BUTTON  <--------------------*/
+
+.container__buttongroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+.container__buttongroup button {
+    border-radius: 8px;
+    background-color: #426a8c;
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    padding: 5px;
+    transition: all 0.5s;
+    cursor: pointer;
+  }
+
+  .sizeone button{
+    width: 70px;
+    margin: 10px 1px 5px 1px;
+    font-size: 12px;
+  }
+
+  .sizetwo button{
+    width: 100px;
+    margin: 2px;
+    font-size: 16px;
+  }
+
+  .container__buttongroup button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .container__buttongroup button span:after {
+    content: "\00bb";
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .container__buttongroup  button:hover span {
+    padding-right: 10px;
+  }
+  
+  .container__buttongroup button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  .container__buttongroup button.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: #91b1cc;
+  }

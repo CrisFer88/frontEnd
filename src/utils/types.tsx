@@ -6,14 +6,13 @@ export type IS_AllProducts = {
   itemc_name: string;
   ParaItemTypes: type_ParaItemType[];
   ColorItems: IS_dataColor[];
-}
+};
 
-export type  type_ParaItemType = {
+export type type_ParaItemType = {
   itemt_name: string;
   itemt_shortname: string;
   ParaSkuSizes: IS_dataSkuSize[];
-}
-
+};
 
 //---------------------------------
 export type IS_dataClasses = {
@@ -65,7 +64,31 @@ export type IS_newStack = {
   itemt_shortname: string;
   skusize_name: string;
   color_name: string;
-  stack_qty: number
+  stack_qty: number;
+};
+
+export type IS_allOrdersByDate = {
+  order_id?: number;
+  assig_id: number;
+  order_qty: number;
+  order_date: string;
+  order_name: string;
+};
+
+export type IS_allStacksByDate = {
+  stackp_id: number;
+  assig_id: number;
+  order_id: number;
+  stackp_class: string;
+  stackp_component: string;
+  stackp_shortname: string;
+  stackp_size: string;
+  stackp_sku: string;
+  stackp_color: string;
+  stackp_qty: number;
+  stackp_status: string;
+  stackp_date: string;
+  stackp_combine: boolean;
 };
 
 //------------------>  INITIAL STATE REDUX STORE
@@ -105,27 +128,27 @@ export type IS_typeColorAssignment = {
   error: string | undefined;
 };
 
-
+export type IS_typeAllOrdersByDate = {
+  isLoading: boolean;
+  dataFetched: boolean;
+  data: IS_allOrdersByDate[] | [];
+  error: string | undefined;
+};
 //------------------> TYPE COMPONENTS
 
 export type ButtonGroupProps = {
   onSave?: (e: MouseEvent<HTMLButtonElement>) => void;
   onDelete?: (e: MouseEvent<HTMLButtonElement>) => void;
   onUpdate?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onReset?: (e: MouseEvent<HTMLButtonElement>) => void;
   selectedItem?: boolean;
 };
-
-
 
 export type localStorageMachine = {
   assignment: number;
   machine: string;
   processM: string;
-}
-
-
-
-
+};
 
 //------------------> PENDIENTE
 
@@ -135,4 +158,3 @@ export type IS_AllSkuSizeAssignment = {
   itemc_nameValid: string;
   skusize: [];
 };
-
