@@ -46,12 +46,10 @@ const AllClases = () => {
   } = useForm(initState, formValidations);
 
   useEffect(() => {
-    return () => {
       console.log("validacion clases: ", !dataFetched);
       if (!dataFetched) {
         dispatch(fetchClasses());
       }
-    };
   }, [dataFetched]);
 
   const handleIndividualItem = (clase: IS_dataClasses) => {

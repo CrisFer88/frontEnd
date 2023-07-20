@@ -16,6 +16,7 @@ import {
 } from "../../../utils/types";
 
 const initFormState: IS_newStack = {
+  order_id: "",
   itemc_id: "",
   itemc_name: "",
   itemt_name: "",
@@ -124,11 +125,12 @@ export const NewStackForm = () => {
       openModal();
     } else {
       const machine: localStorageMachine = JSON.parse(localStorage.getItem("Machine") || "");
+      const orderId = localStorage.getItem("orderId");
       const dataSave = {
         machine,
         data: {
           assig_id: machine.assignment,
-          order_id: 43,
+          order_id: orderId,
           stackp_class: values.itemc_name,
           stackp_component: values.itemt_name,
           stackp_shortname: values.itemt_shortname,

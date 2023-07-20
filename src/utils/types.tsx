@@ -58,6 +58,7 @@ export type IS_Form_dataColorAssignment = {
 };
 
 export type IS_newStack = {
+  order_id: string;
   itemc_name: string;
   itemc_id: string;
   itemt_name: string;
@@ -134,6 +135,11 @@ export type IS_typeAllOrdersByDate = {
   data: IS_allOrdersByDate[] | [];
   error: string | undefined;
 };
+
+
+
+
+
 //------------------> TYPE COMPONENTS
 
 export type ButtonGroupProps = {

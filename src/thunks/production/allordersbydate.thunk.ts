@@ -35,7 +35,7 @@ const newOrder = createAsyncThunk(
       order_date: dataReq.order_date,
       order_name: dataReq.order_name,
     });
-    return response.data;
+    return response.data.data;
   }
 );
 

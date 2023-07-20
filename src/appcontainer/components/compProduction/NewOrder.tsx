@@ -1,60 +1,36 @@
 import React, { useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
-import { IS_allOrdersByDate, localStorageMachine } from "../../../utils/types";
+
 import useForm from "../../../hooks/useForm";
-import { regexEmpty, regexNum, regexZeroEmpty } from "../../../utils/regexVar";
 import Modal from "../ui/Modal";
-import { useModal } from "../../../hooks/useModal";
-import { useAppDispatch, useAppSelector } from "../../../store";
-import {
-  fetchAllOrdersByDate,
-  newOrder,
-} from "../../../thunks/production/allordersbydate.thunk";
-import { formatDateTime } from "../../../utils/funtionsApp";
 import addButton from "../../../assets/icon/add_button.png";
-import "../../../styles/page.css";
 import ButtonGroup from "../ui/ButtonGroup";
+
+import "../../../styles/page.css";
+
+import { IS_allOrdersByDate } from "../../../utils/types";
+import { formatDateTime } from "../../../utils/funtionsApp";
+import { regexEmpty, regexNum, regexZeroEmpty } from "../../../utils/regexVar";
+
+import { newOrder } from "../../../thunks/production/allordersbydate.thunk";
+import { useModal } from "../../../hooks/useModal";
+import { useAllOrdersData } from "../../../hooks/useAllOrdersData";
+import { useAppDispatch } from "../../../store";
 
 export const NewOrder = () => {
   const dispatch = useAppDispatch();
   const [startDate, setStartDate] = useState(new Date());
   const [selectedItem, setSelectedItem] = useState(false);
   const { isOpen, closeModal, openModal } = useModal(false);
-  const machine: localStorageMachine = JSON.parse(localStorage.getItem("Machine") || "");
-  const respu = useAppSelector((state) => state.allOrders);
-  const { isLoading, data: allOrdersR, dataFetched, error } = respu;
-  // En el componente, utiliza el estado para almacenar los datos en orden inverso
 
-  
-  const iniOrder: IS_allOrdersByDate= {
-    order_id: 0,
-    assig_id: 0,
-    order_qty: 0,
-    order_date: "",
-    order_name: "",
-  };
-  const [reversedData, setReversedData] = useState(allOrdersR.slice().reverse());
-  
-
-  console.log("Las Ordenes", allOrdersR);
-
-  interface dr {
-    assig_id: number;
-    order_date: string;
-  }
-
-  const data: dr = {
-    assig_id: machine.assignment,
-    order_date: startDate.toString(),
-  };
- 
-  useEffect(() => {
-    dispatch(fetchAllOrdersByDate(data));
-  }, [dataFetched]);
-  
-
-
-  console.log(reversedData);
+  /*
+    This hook allowme to get all the record data that comes from the DB 
+    and return the machine assignment, I am passing an argument which is the date comimg from
+    DatePicker state.
+  */
+  const { isLoading, data, reversedData, machine } = useAllOrdersData(
+    startDate.toString()
+  );
 
   const formValidations = {
     order_name: [
@@ -201,41 +177,43 @@ export const NewOrder = () => {
         </form>
       </div>
       <div className="container__page">
-        <div className="container__table">
-          <div className="container__table--title">
-            <p>TODAY'S ORDERS</p>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>QUANTITY</th>
-                <th>DATE</th>
-                <th>NAME</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {reversedData.map((elem, index: number) => (
-                <tr key={`A${index}`}>
-                  <td className="centered-data"> {elem.order_qty} </td>
-                  <td className="centered-data">
-                    {" "}
-                    {formatDateTime(elem.order_date)}
-                  </td>
-                  <td className="centered-data"> {elem.order_name} </td>
-                  <td className="centered-data">
-                    <img
-                      className="img__add"
-                      src={addButton}
-                      alt={`Name:${elem.order_name}`}
-                      onClick={() => handleIndividualItem(elem)}
-                    />
-                  </td>
+        {reversedData.length > 0 && (
+          <div className="container__table">
+            <div className="container__table--title">
+              <p>TODAY'S ORDERS</p>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>QUANTITY</th>
+                  <th>DATE</th>
+                  <th>NAME</th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {reversedData.map((elem: IS_allOrdersByDate, index: number) => (
+                  <tr key={`A${index}`}>
+                    <td className="centered-data"> {elem.order_qty} </td>
+                    <td className="centered-data">
+                      {" "}
+                      {formatDateTime(elem.order_date)}
+                    </td>
+                    <td className="centered-data"> {elem.order_name} </td>
+                    <td className="centered-data">
+                      <img
+                        className="img__add"
+                        src={addButton}
+                        alt={`Name:${elem.order_name}`}
+                        onClick={() => handleIndividualItem(elem)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

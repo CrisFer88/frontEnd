@@ -5,6 +5,11 @@
     align-items: center;
     margin: 10px 0px 20px 0px;
   }
+.container__page--title{
+  font-size: larger;
+    font-weight: bold;
+    padding: 10px 0px 20px 0px;
+}
 .container__table {
     display: flex;
     flex-direction: column;
@@ -43,4 +48,8 @@
   text-align: center;
   padding: 2px 5px 0px 5px ;
   border-bottom: dotted 1px ;
+}
+
+.bold{
+  font-weight: bold;
 }
