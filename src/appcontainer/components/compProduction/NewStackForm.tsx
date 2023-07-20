@@ -9,11 +9,13 @@ import Modal from "../ui/Modal";
 import { fetchAllItems } from "../../../thunks/dataApp/allitems.thunk";
 import {
   IS_AllProducts,
+  IS_allStacksByDate,
   IS_dataSkuSize,
   IS_newStack,
   localStorageMachine,
   type_ParaItemType,
 } from "../../../utils/types";
+import PrintLabel from "../ui/PrintLabel";
 
 const initFormState: IS_newStack = {
   order_id: "",
@@ -28,10 +30,11 @@ const initFormState: IS_newStack = {
 
 export const NewStackForm = () => {
   const [startDate, setStartDate] = useState(new Date());
+
   const { isOpen, closeModal, openModal } = useModal(false);
   const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.productsApp);
-  const { isLoading, data, dataFetched } = respu;
+  const { isLoading: loadingRespu, data, dataFetched } = respu;
 
   const formValidations = {
     itemc_name: [
@@ -96,8 +99,7 @@ export const NewStackForm = () => {
 
   useEffect(() => {
     setStartDate(new Date());
-  }, [values])
-  
+  }, [values]);
 
   const optionComponents = data.filter((elem: IS_AllProducts) => {
     if (elem.itemc_id === values.itemc_id) {
@@ -116,21 +118,64 @@ export const NewStackForm = () => {
     })
   );
 
+  type initDataSend = {
+    status: boolean;
+    data: IS_allStacksByDate
+  };
+
+  const initialData: initDataSend = {
+    status: false,
+    data: {
+      assig_id: 0,
+      order_id: 0,
+      stackp_qty: 0,
+      stackp_class: '',
+      stackp_component: '',
+      stackp_shortname: '',
+      stackp_size: '',
+      stackp_sku: '',
+      stackp_color: '',
+      stackp_status: '',
+      stackp_date: '',
+      stackp_combine: false,
+    },
+  };
+
+  const [printData, setPrintData] = useState(initialData);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    console.log(isFormValid, errors);
+
+    // console.log(isFormValid, errors);
 
     if (!isFormValid) {
       openModal();
     } else {
-      const machine: localStorageMachine = JSON.parse(localStorage.getItem("Machine") || "");
+      const machine: localStorageMachine = JSON.parse(
+        localStorage.getItem("Machine") || ""
+      );
       const orderId = localStorage.getItem("orderId");
-      const dataSave = {
-        machine,
+      // const dataSave: IS_allStacksByDate = {
+      //   assig_id: machine.assignment,
+      //   order_id: Number(orderId),
+      //   stackp_class: values.itemc_name,
+      //   stackp_component: values.itemt_name,
+      //   stackp_shortname: values.itemt_shortname,
+      //   stackp_size: values.skusize_name,
+      //   stackp_sku: values.itemt_shortname + values.skusize_name,
+      //   stackp_color: values.color_name,
+      //   stackp_qty: values.stack_qty,
+      //   stackp_status: machine.processM,
+      //   stackp_date: startDate.toLocaleString(),
+      //   stackp_combine: false,
+      //   machineName: machine.machine,
+      // };
+      // console.log(dataSave);
+      setPrintData({
+        status: true,
         data: {
           assig_id: machine.assignment,
-          order_id: orderId,
+          order_id: Number(orderId),
           stackp_class: values.itemc_name,
           stackp_component: values.itemt_name,
           stackp_shortname: values.itemt_shortname,
@@ -138,16 +183,16 @@ export const NewStackForm = () => {
           stackp_sku: values.itemt_shortname + values.skusize_name,
           stackp_color: values.color_name,
           stackp_qty: values.stack_qty,
-          stackp_status: "START",
+          stackp_status: machine.processM,
           stackp_date: startDate.toLocaleString(),
           stackp_combine: false,
+          machineName: machine.machine,
         },
-      };
-      console.log(dataSave);
+      });
     }
   };
 
-  if (isLoading) {
+  if (loadingRespu) {
     return (
       <>
         <p>Loading</p>
@@ -302,7 +347,10 @@ export const NewStackForm = () => {
           </form>
         </div>
 
-        {/* Contenedor del formulario */}
+        {
+          printData.status && <PrintLabel status={ printData.status }  data={ printData.data } />
+        }
+         
       </div>
     );
   }

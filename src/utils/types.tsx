@@ -77,7 +77,7 @@ export type IS_allOrdersByDate = {
 };
 
 export type IS_allStacksByDate = {
-  stackp_id: number;
+  stackp_id?: number;
   assig_id: number;
   order_id: number;
   stackp_class: string;
@@ -90,6 +90,7 @@ export type IS_allStacksByDate = {
   stackp_status: string;
   stackp_date: string;
   stackp_combine: boolean;
+  machineName?: string;
 };
 
 //------------------>  INITIAL STATE REDUX STORE

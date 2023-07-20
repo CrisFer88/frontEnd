@@ -9,8 +9,8 @@ interface Props {
 
 const Modal = ({ children, isOpen, closeModal, classNameModal }: Props) => {
   return (
-    <article className={`${isOpen ? "modal modal--open" : "modal"}`}>
-      <div className={`modal__container ${classNameModal}`}>
+    <article className={`${isOpen ? "modal modal--open " : "modal"}`}>
+      <div className={`${classNameModal} modal__container`}>
         <button className="modal__button" onClick={closeModal}>
           X
         </button>
