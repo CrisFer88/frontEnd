@@ -6,6 +6,8 @@ import Modal from "./Modal";
 import "../../../styles/modalLabel.css";
 import { formatDateTime } from "../../../utils/funtionsApp";
 import printIcon from "../../../assets/icon/printer.png";
+import { useAppDispatch, useAppSelector } from "../../../store";
+import { newStack } from "../../../thunks/production/allstackbydate.thunk";
 
 const PrintLabel = ({
   status,
@@ -14,6 +16,9 @@ const PrintLabel = ({
   status: boolean;
   data: IS_allStacksByDate;
 }) => {
+  const dispatch = useAppDispatch();
+  const respu = useAppSelector((state) => state.allStacks);
+  const { isLoading, data: reversedData, dataFetched, error } = respu;
   const [qrData, setQrData] = useState<string>("");
   const [controlModal, setControlModal] = useState<boolean>(status);
   // console.log("data Recibida: ", data );
@@ -21,7 +26,10 @@ const PrintLabel = ({
 
 
 
-
+  useEffect( () => {
+    const result = dispatch(newStack(data));
+    console.log("El resultado de guardar es: ", );
+  },[dataFetched] );
   
 
 

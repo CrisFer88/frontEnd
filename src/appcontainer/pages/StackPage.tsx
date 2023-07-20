@@ -9,7 +9,6 @@ export const StackPage = () => {
     <>
       <OrderList />
       <NewStackForm />
-      <StackByUSer />
     </>
   );
 };

@@ -137,7 +137,12 @@ export type IS_typeAllOrdersByDate = {
   error: string | undefined;
 };
 
-
+export type IS_typeAllStackByDate = {
+  isLoading: boolean;
+  dataFetched: boolean;
+  data: IS_allStacksByDate[] | [];
+  error: string | undefined;
+};
 
 
 

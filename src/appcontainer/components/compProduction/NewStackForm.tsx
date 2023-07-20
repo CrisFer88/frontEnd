@@ -16,6 +16,7 @@ import {
   type_ParaItemType,
 } from "../../../utils/types";
 import PrintLabel from "../ui/PrintLabel";
+import { StackByUSer } from "../../pages/StackByUser";
 
 const initFormState: IS_newStack = {
   order_id: "",
@@ -120,7 +121,7 @@ export const NewStackForm = () => {
 
   type initDataSend = {
     status: boolean;
-    data: IS_allStacksByDate
+    data: IS_allStacksByDate;
   };
 
   const initialData: initDataSend = {
@@ -129,14 +130,14 @@ export const NewStackForm = () => {
       assig_id: 0,
       order_id: 0,
       stackp_qty: 0,
-      stackp_class: '',
-      stackp_component: '',
-      stackp_shortname: '',
-      stackp_size: '',
-      stackp_sku: '',
-      stackp_color: '',
-      stackp_status: '',
-      stackp_date: '',
+      stackp_class: "",
+      stackp_component: "",
+      stackp_shortname: "",
+      stackp_size: "",
+      stackp_sku: "",
+      stackp_color: "",
+      stackp_status: "",
+      stackp_date: "",
       stackp_combine: false,
     },
   };
@@ -200,158 +201,166 @@ export const NewStackForm = () => {
     );
   } else {
     return (
-      <div className="container__form">
-        <Modal isOpen={isOpen} closeModal={closeModal} classNameModal="modalA">
-          <div className="modal__headerA">
-            <p className="es">Estos son los errores en el formulario:</p>
-            <p className="en">These are the present error in the form.</p>
-          </div>
-          <div className="modal__bodyA">
-            {Object.values(errors).map(
-              (e, index) => !!e && <p key={index}>{e}</p>
-            )}
-          </div>
-        </Modal>
-        {/* Tititulo del formulario */}
-        {/* <div className="container__form--title">
+      <>
+        <div className="container__form">
+          <Modal
+            isOpen={isOpen}
+            closeModal={closeModal}
+            classNameModal="modalA"
+          >
+            <div className="modal__headerA">
+              <p className="es">Estos son los errores en el formulario:</p>
+              <p className="en">These are the present error in the form.</p>
+            </div>
+            <div className="modal__bodyA">
+              {Object.values(errors).map(
+                (e, index) => !!e && <p key={index}>{e}</p>
+              )}
+            </div>
+          </Modal>
+          {/* Tititulo del formulario */}
+          {/* <div className="container__form--title">
           <p> NEW ORDER </p>
         </div> */}
-        <div className="container__form--body">
-          {/* Inicio del formulario */}
-          <form
-            onSubmit={handleSubmit}
-            className="form__options"
-            autoComplete="none"
-          >
-            <div className="col center">
-              <div className="input__spetialfieldform">
-                <ReactDatePicker
-                  selected={startDate}
-                  onChange={(date: Date) => setStartDate(date)}
-                  showTimeSelect
-                  timeIntervals={15} // Puedes ajustar los intervalos de tiempo según tus necesidades
-                  timeCaption="Hora"
-                  dateFormat="dd/MM/yyyy HH:mm" // Puedes cambiar el formato de fecha y hora según tus necesidades
-                  name="singUpDate"
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                />
-              </div>
-            </div>
-
-            <div className="fieldform">
+          <div className="container__form--body">
+            {/* Inicio del formulario */}
+            <form
+              onSubmit={handleSubmit}
+              className="form__options"
+              autoComplete="none"
+            >
               <div className="col center">
-                <label className="label__title">PRODUCT CLASS:</label>
-                <select
-                  name="itemc_id"
-                  className="select__field"
-                  value={values.itemc_id}
-                  onChange={onNewOrder}
-                >
-                  <option key="itemc_1"></option>
-                  {Array.isArray(data) &&
-                    data.map((elem: IS_AllProducts, index) => (
-                      <option value={elem.itemc_id} key={index}>
-                        {elem.itemc_name}
-                      </option>
-                    ))}
-                </select>
+                <div className="input__spetialfieldform">
+                  <ReactDatePicker
+                    selected={startDate}
+                    onChange={(date: Date) => setStartDate(date)}
+                    showTimeSelect
+                    timeIntervals={15} // Puedes ajustar los intervalos de tiempo según tus necesidades
+                    timeCaption="Hora"
+                    dateFormat="dd/MM/yyyy HH:mm" // Puedes cambiar el formato de fecha y hora según tus necesidades
+                    name="singUpDate"
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="col center">
-              <label className="label__title">COMPONENT:</label>
-              <div className="row">
+              <div className="fieldform">
+                <div className="col center">
+                  <label className="label__title">PRODUCT CLASS:</label>
+                  <select
+                    name="itemc_id"
+                    className="select__field"
+                    value={values.itemc_id}
+                    onChange={onNewOrder}
+                  >
+                    <option key="itemc_1"></option>
+                    {Array.isArray(data) &&
+                      data.map((elem: IS_AllProducts, index) => (
+                        <option value={elem.itemc_id} key={index}>
+                          {elem.itemc_name}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="col center">
+                <label className="label__title">COMPONENT:</label>
+                <div className="row">
+                  <select
+                    name="itemt_name"
+                    className="select__field"
+                    value={values.itemt_name}
+                    onChange={onNewOrder}
+                  >
+                    <option key="itemt_1"></option>
+                    {optionComponents.map((elem: IS_AllProducts) =>
+                      elem.ParaItemTypes.map((ParaType, index) => (
+                        <option key={index}>{ParaType.itemt_name}</option>
+                      ))
+                    )}
+                  </select>
+                  <div className="fieldform">
+                    <input
+                      className="input__field--short"
+                      name="itemt_shortname"
+                      onChange={onNewOrderInput}
+                      value={values.itemt_shortname}
+                    ></input>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col center">
+                <label className="label__title">SKU / SIZE:</label>
                 <select
-                  name="itemt_name"
+                  name="skusize_name"
                   className="select__field"
-                  value={values.itemt_name}
+                  value={values.skusize_name}
                   onChange={onNewOrder}
                 >
                   <option key="itemt_1"></option>
-                  {optionComponents.map((elem: IS_AllProducts) =>
-                    elem.ParaItemTypes.map((ParaType, index) => (
-                      <option key={index}>{ParaType.itemt_name}</option>
+                  {optionSkusize.length > 0 &&
+                    optionSkusize[0].map((ele: type_ParaItemType) =>
+                      ele.ParaSkuSizes.map(
+                        (ss: IS_dataSkuSize, index: number) => (
+                          <option key={index}>{ss.skusize_name}</option>
+                        )
+                      )
+                    )}
+                </select>
+              </div>
+
+              <div className="col center">
+                <label className="label__title">COLOR:</label>
+                <select
+                  name="color_name"
+                  className="select__field"
+                  value={values.color_name}
+                  onChange={onNewOrder}
+                >
+                  <option key="itemt_1"></option>
+                  {optionComponents.map((elem: IS_AllProducts, index: number) =>
+                    elem.ColorItems.map((ParaType, index) => (
+                      <option key={index}>{ParaType.color_name}</option>
                     ))
                   )}
                 </select>
-                <div className="fieldform">
-                  <input
-                    className="input__field--short"
-                    name="itemt_shortname"
-                    onChange={onNewOrderInput}
-                    value={values.itemt_shortname}
-                  ></input>
-                </div>
               </div>
-            </div>
 
-            <div className="col center">
-              <label className="label__title">SKU / SIZE:</label>
-              <select
-                name="skusize_name"
-                className="select__field"
-                value={values.skusize_name}
-                onChange={onNewOrder}
-              >
-                <option key="itemt_1"></option>
-                {optionSkusize.length > 0 &&
-                  optionSkusize[0].map((ele: type_ParaItemType) =>
-                    ele.ParaSkuSizes.map(
-                      (ss: IS_dataSkuSize, index: number) => (
-                        <option key={index}>{ss.skusize_name}</option>
-                      )
-                    )
-                  )}
-              </select>
-            </div>
+              <div className="col center">
+                <label className="label__title">QUANTITY:</label>
+                <input
+                  name="stack_qty"
+                  className="select__field"
+                  value={values.stack_qty}
+                  onChange={onNewOrderInput}
+                ></input>
+              </div>
 
-            <div className="col center">
-              <label className="label__title">COLOR:</label>
-              <select
-                name="color_name"
-                className="select__field"
-                value={values.color_name}
-                onChange={onNewOrder}
-              >
-                <option key="itemt_1"></option>
-                {optionComponents.map((elem: IS_AllProducts, index: number) =>
-                  elem.ColorItems.map((ParaType, index) => (
-                    <option key={index}>{ParaType.color_name}</option>
-                  ))
-                )}
-              </select>
-            </div>
+              {/* Contenedor de la botonera */}
+              <div className="container__form--title ">
+                <button className="button__form">
+                  <span>SAVE</span>
+                </button>
+                <button className="button__form" onClick={onResetForm}>
+                  <span>RESET</span>
+                </button>
+              </div>
+            </form>
+          </div>
 
-            <div className="col center">
-              <label className="label__title">QUANTITY:</label>
-              <input
-                name="stack_qty"
-                className="select__field"
-                value={values.stack_qty}
-                onChange={onNewOrderInput}
-              ></input>
-            </div>
-
-            {/* Contenedor de la botonera */}
-            <div className="container__form--title ">
-              <button className="button__form">
-                <span>SAVE</span>
-              </button>
-              <button className="button__form" onClick={onResetForm}>
-                <span>RESET</span>
-              </button>
-            </div>
-          </form>
+          {printData.status && (
+            <PrintLabel status={printData.status} data={printData.data} />
+          )}
         </div>
 
-        {
-          printData.status && <PrintLabel status={ printData.status }  data={ printData.data } />
-        }
-         
-      </div>
+        <StackByUSer stackp_date={  startDate.toString() }/>
+
+      </>
     );
   }
 };
