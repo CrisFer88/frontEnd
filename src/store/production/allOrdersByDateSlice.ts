@@ -29,6 +29,9 @@ export const allOrdersByDate = createSlice({
       state.isLoading= false;
       state.error = action.error.message;
     }) 
+    builder.addCase(newOrder.pending, ( state ) => {
+      state.isLoading = true;
+    })
     builder.addCase( newOrder.fulfilled, ( state, action) => {
         state.isLoading = false;
         state.dataFetched = true;
@@ -40,4 +43,3 @@ export const allOrdersByDate = createSlice({
 
 
 export default allOrdersByDate.reducer;
-

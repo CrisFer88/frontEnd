@@ -14,9 +14,12 @@ import {
   IS_newStack,
   localStorageMachine,
   type_ParaItemType,
+  type_dataPrint,
 } from "../../../utils/types";
 import PrintLabel from "../ui/PrintLabel";
 import { StackByUSer } from "../../pages/StackByUser";
+import { newStack } from "../../../thunks/production/allstackbydate.thunk";
+import ButtonGroup from "../ui/ButtonGroup";
 
 const initFormState: IS_newStack = {
   order_id: "",
@@ -30,10 +33,14 @@ const initFormState: IS_newStack = {
 };
 
 export const NewStackForm = () => {
+  const dispatch = useAppDispatch();
   const [startDate, setStartDate] = useState(new Date());
+  const [errorORderID, setErrorORderID] = useState({ status: false, msg: "" });
+  // State variable to indicate whether a new stack is added
+  //  const [isStackAdded, setIsStackAdded] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(false);
 
   const { isOpen, closeModal, openModal } = useModal(false);
-  const dispatch = useAppDispatch();
   const respu = useAppSelector((state) => state.productsApp);
   const { isLoading: loadingRespu, data, dataFetched } = respu;
 
@@ -82,6 +89,7 @@ export const NewStackForm = () => {
 
   const {
     values,
+    setValues,
     errors,
     handleChangeSelect: onNewOrder,
     handleChangeInput: onNewOrderInput,
@@ -91,12 +99,10 @@ export const NewStackForm = () => {
   } = useForm(initFormState, formValidations);
 
   useEffect(() => {
-    return () => {
-      if (!dataFetched) {
-        dispatch(fetchAllItems());
-      }
-    };
-  }, []);
+    if (!dataFetched) {
+      dispatch(fetchAllItems());
+    }
+  }, [dataFetched]);
 
   useEffect(() => {
     setStartDate(new Date());
@@ -119,13 +125,9 @@ export const NewStackForm = () => {
     })
   );
 
-  type initDataSend = {
-    status: boolean;
-    data: IS_allStacksByDate;
-  };
-
-  const initialData: initDataSend = {
+  const initialData: type_dataPrint = {
     status: false,
+    stackp_id: '',
     data: {
       assig_id: 0,
       order_id: 0,
@@ -144,10 +146,9 @@ export const NewStackForm = () => {
 
   const [printData, setPrintData] = useState(initialData);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    // console.log(isFormValid, errors);
+    const orderId = localStorage.getItem("orderId");
 
     if (!isFormValid) {
       openModal();
@@ -155,42 +156,86 @@ export const NewStackForm = () => {
       const machine: localStorageMachine = JSON.parse(
         localStorage.getItem("Machine") || ""
       );
-      const orderId = localStorage.getItem("orderId");
-      // const dataSave: IS_allStacksByDate = {
-      //   assig_id: machine.assignment,
-      //   order_id: Number(orderId),
-      //   stackp_class: values.itemc_name,
-      //   stackp_component: values.itemt_name,
-      //   stackp_shortname: values.itemt_shortname,
-      //   stackp_size: values.skusize_name,
-      //   stackp_sku: values.itemt_shortname + values.skusize_name,
-      //   stackp_color: values.color_name,
-      //   stackp_qty: values.stack_qty,
-      //   stackp_status: machine.processM,
-      //   stackp_date: startDate.toLocaleString(),
-      //   stackp_combine: false,
-      //   machineName: machine.machine,
-      // };
-      // console.log(dataSave);
-      setPrintData({
-        status: true,
-        data: {
-          assig_id: machine.assignment,
-          order_id: Number(orderId),
-          stackp_class: values.itemc_name,
-          stackp_component: values.itemt_name,
-          stackp_shortname: values.itemt_shortname,
-          stackp_size: values.skusize_name,
-          stackp_sku: values.itemt_shortname + values.skusize_name,
-          stackp_color: values.color_name,
-          stackp_qty: values.stack_qty,
-          stackp_status: machine.processM,
-          stackp_date: startDate.toLocaleString(),
-          stackp_combine: false,
-          machineName: machine.machine,
-        },
-      });
+
+      if (Number(orderId) !== 0) {
+                try {
+
+          
+                  
+                  const dataS = {
+                    assig_id: machine.assignment,
+                    order_id: Number(orderId),
+                    stackp_class: values.itemc_name,
+                    stackp_component: values.itemt_name,
+                    stackp_shortname: values.itemt_shortname,
+                    stackp_size: values.skusize_name,
+                    stackp_sku: values.itemt_shortname + values.skusize_name,
+                    stackp_color: values.color_name,
+                    stackp_qty: values.stack_qty,
+                    stackp_status: machine.processM,
+                    stackp_date: startDate.toLocaleString(),
+                    stackp_combine: false,
+                    machineName: machine.machine,
+                  };
+                  
+                  const stackResponse = await dispatch(newStack(dataS));
+
+                  console.log("esto es lo que trae el stackResponse :", stackResponse);
+          
+          setPrintData({
+            status: true,
+            stackp_id: stackResponse.payload.stackp_id,
+            data: dataS,
+          });
+
+          console.log(printData);
+
+        } catch (error) {
+          console.log('Error newStack: ', error);
+        }
+        // setIsStackAdded(true);
+      } else {
+        setErrorORderID({
+          status: true,
+          msg: "Please, select an order from the list.",
+        });
+        openModal();
+      }
     }
+  };
+
+  const stackByUserSelected = (elem: IS_allStacksByDate) => {
+    setSelectedItem(true);
+    // console.log(values);
+    // console.log(elem);
+
+    const itemcID = data.find((e) => e.itemc_name === elem.stackp_class) || {
+      itemc_id: "1",
+    };
+
+    // console.log(itemcID?.itemc_id);
+
+    setValues({
+      ...values,
+      order_id: elem.order_id.toString(),
+      itemc_id: itemcID?.itemc_id.toString(),
+      itemc_name: elem.stackp_class,
+      itemt_name: elem.stackp_component,
+      itemt_shortname: elem.stackp_shortname,
+      skusize_name: elem.stackp_size,
+      color_name: elem.stackp_color,
+      stack_qty: elem.stackp_qty,
+      assig_id: elem.assig_id.toString(),
+    });
+  };
+
+  const handleOnDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log("Se va aborrar Color");
+  };
+  const handleOnUpDate = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log("se va a actualizar Color");
   };
 
   if (loadingRespu) {
@@ -203,32 +248,44 @@ export const NewStackForm = () => {
     return (
       <>
         <div className="container__form">
-          <Modal
-            isOpen={isOpen}
-            closeModal={closeModal}
-            classNameModal="modalA"
-          >
-            <div className="modal__headerA">
-              <p className="es">Estos son los errores en el formulario:</p>
-              <p className="en">These are the present error in the form.</p>
-            </div>
-            <div className="modal__bodyA">
-              {Object.values(errors).map(
-                (e, index) => !!e && <p key={index}>{e}</p>
-              )}
-            </div>
-          </Modal>
+          {errorORderID.status ? (
+            <Modal
+              isOpen={isOpen}
+              closeModal={closeModal}
+              classNameModal="modalA"
+            >
+              <div className="modal__headerA">
+                <p className="es">Estos son los errores en el formulario:</p>
+                <p className="en">These are the present error in the form.</p>
+              </div>
+              <div className="modal__bodyA">
+                <p> {errorORderID.msg} </p>
+              </div>
+            </Modal>
+          ) : (
+            <Modal
+              isOpen={isOpen}
+              closeModal={closeModal}
+              classNameModal="modalA"
+            >
+              <div className="modal__headerA">
+                <p className="es">Estos son los errores en el formulario:</p>
+                <p className="en">These are the present error in the form.</p>
+              </div>
+              <div className="modal__bodyA">
+                {Object.values(errors).map(
+                  (e, index) => !!e && <p key={index}>{e}</p>
+                )}
+              </div>
+            </Modal>
+          )}
           {/* Tititulo del formulario */}
           {/* <div className="container__form--title">
           <p> NEW ORDER </p>
         </div> */}
           <div className="container__form--body">
             {/* Inicio del formulario */}
-            <form
-              onSubmit={handleSubmit}
-              className="form__options"
-              autoComplete="none"
-            >
+            <form className="form__options" autoComplete="none">
               <div className="col center">
                 <div className="input__spetialfieldform">
                   <ReactDatePicker
@@ -342,24 +399,33 @@ export const NewStackForm = () => {
               </div>
 
               {/* Contenedor de la botonera */}
-              <div className="container__form--title ">
-                <button className="button__form">
+              <div className="container__buttongroup sizeone">
+                <ButtonGroup
+                  onSave={handleSubmit}
+                  onReset={onResetForm}
+                  onDelete={handleOnDelete}
+                  onUpdate={handleOnUpDate}
+                  selectedItem={selectedItem}
+                />
+                {/* <button className="button__form">
                   <span>SAVE</span>
                 </button>
                 <button className="button__form" onClick={onResetForm}>
                   <span>RESET</span>
-                </button>
+                </button> */}
               </div>
             </form>
           </div>
 
           {printData.status && (
-            <PrintLabel status={printData.status} data={printData.data} />
+            <PrintLabel dataPrint={printData} />
           )}
         </div>
 
-        <StackByUSer stackp_date={  startDate.toString() }/>
-
+        <StackByUSer
+          stackp_date={startDate.toString()}
+          stackByUserSelected={stackByUserSelected}
+        />
       </>
     );
   }

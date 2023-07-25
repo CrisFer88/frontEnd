@@ -5,9 +5,9 @@ import { IS_allStacksByDate, localStorageMachine } from '../../utils/types';
 import addButton from "../../assets/icon/add_button.png";
 import { formatDateTime } from '../../utils/funtionsApp';
 
-export const StackByUSer = ({ stackp_date }: { stackp_date: string } ) => {
+export const StackByUSer = ({ stackp_date, stackByUserSelected}: { stackp_date: string, stackByUserSelected: (elem: IS_allStacksByDate) => void }) => {
   const dispatch = useAppDispatch();
-  const [selectedItem, setSelectedItem] = useState(false);
+ 
   const respu = useAppSelector((state) => state.allStacks);
   const { isLoading, data: reversedData, dataFetched, error } = respu;
   const machine: localStorageMachine = JSON.parse(
@@ -18,23 +18,13 @@ export const StackByUSer = ({ stackp_date }: { stackp_date: string } ) => {
     stackp_date
   };
 
-  useEffect(() => {
-    if (!dataFetched) {
-      console.log(dataLocalStorage);
-      dispatch(fetchAllStacksByDate( dataLocalStorage ));
-    }
-  }, [dataFetched]);
+    // console.log('IsLoading aqui: ', isLoading);
 
-  const handleIndividualItem = (elem: IS_allStacksByDate) => {
-    setSelectedItem(true);
-    // console.log(elem);
-    // setValues({
-    //   ...values,
-    //   order_qty: elem.order_qty,
-    //   order_name: elem.order_name,
-    // });
-  };
-
+    useEffect(() => {
+      if (!dataFetched) {
+        dispatch(fetchAllStacksByDate(dataLocalStorage));
+      }
+    }, [isLoading]);
 
   return (
     <div>
@@ -67,7 +57,7 @@ export const StackByUSer = ({ stackp_date }: { stackp_date: string } ) => {
                         className="img__add"
                         src={addButton}
                         alt={`Name:${elem.stackp_sku}`}
-                        onClick={() => handleIndividualItem(elem)}
+                        onClick={() => stackByUserSelected(elem)}
                       />
                     </td>
                   </tr>

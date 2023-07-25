@@ -8,9 +8,9 @@ interface dr {
 }
 
 const fetchAllStacksByDate = createAsyncThunk(
-  "allStack/fetchAllStacksByDate",
+  "allStacks/fetchAllStacksByDate",
   async (dataReq: dr) => {
-    console.log("Esto es dataReq: ", dataReq);
+    // console.log("Esto es dataReq: ", dataReq);
     try {
       const response = await transactionApi.get(`/stack/user`, {
         params: {
@@ -19,7 +19,8 @@ const fetchAllStacksByDate = createAsyncThunk(
         },
       });
       const data = response.data.data;
-      return data;
+      return data.reverse();
+      // return data;
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +28,7 @@ const fetchAllStacksByDate = createAsyncThunk(
 );
 
 const newStack = createAsyncThunk(
-  "allStack/newStack",
+  "allStacks/newStack",
   async (dataReq: IS_allStacksByDate) => {
     const response = await transactionApi.post("/stack", {
       assig_id: dataReq.assig_id,
@@ -43,6 +44,8 @@ const newStack = createAsyncThunk(
       stackp_date: dataReq.stackp_date,
       stackp_combine: dataReq.stackp_combine
     });
+
+    console.log('esto responde del nuevo stack: ', response.data.data);
     return response.data.data;
 }
 );

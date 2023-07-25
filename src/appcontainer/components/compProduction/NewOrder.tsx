@@ -82,6 +82,7 @@ export const NewOrder = () => {
       };
 
       dispatch(newOrder(dataSend));
+      onResetForm();
     }
   };
 
@@ -106,6 +107,8 @@ export const NewOrder = () => {
     e.preventDefault();
     console.log("se va a actualizar Color");
   };
+ 
+
 
   return (
     <div className="container__form">

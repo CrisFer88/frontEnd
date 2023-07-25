@@ -40,7 +40,7 @@ export const useAllOrdersData = ( order_date: string) => {
     if (!dataFetched) {
       dispatch(fetchAllOrdersByDate(dataLocalStorage));
     }
-  }, [dataFetched]);
+  }, [dataFetched, isLoading]);
 
  
 

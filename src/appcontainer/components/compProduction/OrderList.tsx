@@ -23,28 +23,32 @@ export const OrderList = () => {
     order_date: "01/01/0000",
     order_name: "-",
   };
-  
-  const [orderSelected, setOrderSelected] = useState<IS_allOrdersByDate>( iniOrder);
+
+  const [orderSelected, setOrderSelected] =
+    useState<IS_allOrdersByDate>(iniOrder);
 
   useEffect(() => {
     // console.log(!isLoading);
-    if(!isLoading){
-    setOrderSelected(reversedData[0]);
-    localStorage.setItem('orderId', (reversedData[0].order_id)?.toString() || '' )
+    if (!isLoading && reversedData.length > 0) {
+      setOrderSelected(reversedData[0]);
+      localStorage.setItem(
+        "orderId",
+        reversedData[0].order_id?.toString() || ""
+      );
     }
   }, [reversedData]);
 
-
   const handleIndividualItem = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const orderId = e.target.value;
-    
-    const listElement = reversedData.find((elem) => elem.order_id?.toString() === orderId);
-    if(listElement){
+
+    const listElement = reversedData.find(
+      (elem) => elem.order_id?.toString() === orderId
+    );
+    if (listElement) {
       setOrderSelected(listElement);
-      localStorage.setItem('orderId', (listElement.order_id)?.toString() || '' )
+      localStorage.setItem("orderId", listElement.order_id?.toString() || "");
     }
   };
-  
 
   if (isLoading) {
     return (
@@ -63,13 +67,14 @@ export const OrderList = () => {
           <select
             name="order_selected"
             className="select__field"
-            onChange={ handleIndividualItem }
+            onChange={handleIndividualItem}
           >
-            {reversedData.map((elem) => (
-              <option key={elem.order_id} value={elem.order_id}>
-                {elem.order_name} - {formatDateTime(elem.order_date)}
-              </option>
-            ))}
+            {reversedData.length > 0 &&
+              reversedData.map((elem) => (
+                <option key={elem.order_id} value={elem.order_id}>
+                  {elem.order_name} - {formatDateTime(elem.order_date)}
+                </option>
+              ))}
           </select>
         </div>
 
@@ -78,8 +83,16 @@ export const OrderList = () => {
             <label>LAST ORDER SELECTED</label>
           </div>
           <div className="centered-data">
-            <p> { orderSelected.order_name } </p>
-            <p> { formatDateTime(orderSelected.order_date )} </p>
+            {reversedData.length > 0 ? (
+              <p> {orderSelected.order_name} </p>
+            ) : (
+              <p>
+                There are no orders for today, please create a new order before starting.
+              </p>
+            )}
+            {
+              reversedData.length > 0 && <p> {formatDateTime(orderSelected.order_date)} </p>
+            }
           </div>
         </div>
       </div>

@@ -14,6 +14,13 @@ export type type_ParaItemType = {
   ParaSkuSizes: IS_dataSkuSize[];
 };
 
+
+export type type_dataPrint = {
+  status: boolean;
+  stackp_id: string;
+  data: IS_allStacksByDate;
+};
+
 //---------------------------------
 export type IS_dataClasses = {
   itemc_id: string;
@@ -58,6 +65,7 @@ export type IS_Form_dataColorAssignment = {
 };
 
 export type IS_newStack = {
+  assig_id?: string;
   order_id: string;
   itemc_name: string;
   itemc_id: string;

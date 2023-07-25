@@ -10,7 +10,7 @@ interface dr {
 const fetchAllOrdersByDate = createAsyncThunk(
   "allOrders/fetchAllOrdersByDate",
   async (dataReq: dr) => {
-    console.log("Esto es dataReq: ", dataReq);
+    // console.log("Esto es dataReq: ", dataReq);
     try {
       const response = await transactionApi.get(`/orders/user`, {
         params: {

@@ -29,6 +29,9 @@ export const allOrdersByDate = createSlice({
       state.isLoading= false;
       state.error = action.error.message;
     }) 
+    builder.addCase(newStack.pending, ( state ) => {
+      state.isLoading = true;
+    })
     builder.addCase( newStack.fulfilled, ( state, action) => {
         state.isLoading = false;
         state.dataFetched = true;
